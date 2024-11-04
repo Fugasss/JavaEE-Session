@@ -4,9 +4,11 @@ import Header from "./MainPageComponents/Header/Header";
 
 export default function MainPage() {
   return (
-    <div className="flex flex-col flex-1 ml-6">
+    <div className="flex flex-col flex-1">
+      <div className="ml-6 mb-10">
         <Header/>
         <Main/>
+        </div>
         <Footer/>
     </div>
   )
