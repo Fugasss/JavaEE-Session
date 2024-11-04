@@ -7,13 +7,12 @@ export default function ModalWindow({children}:{children:React.ReactNode}){
   const closeModal = ()=>{
     setModal(EModalContent.NONE)
   }
-
     return (
         <div className="fixed top-0 left-0 w-screen h-screen bg-modal_shadow flex flex-col items-center justify-center"
               onClick={closeModal}>
-          <div className="py-20 px-32 rounded-md bg-WHITE"
+          <div className="py-20 px-32 px- rounded-md bg-WHITE w-1/3"
               onClick={(event)=>{event.stopPropagation()}}>
-            {children}
+              {children}
           </div>
         </div>
       )
