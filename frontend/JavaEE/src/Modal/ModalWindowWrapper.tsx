@@ -12,13 +12,6 @@ export default function ModalWindowWrapper({type}:{type:EModalContent}) {
       case EModalContent.NONE:{
         return <></>
       }
-      case EModalContent.LOGIN_WARNING:{
-        return (
-          <ModalWindow>
-            <LoginWarning></LoginWarning>
-          </ModalWindow>
-        )
-      }
       case EModalContent.LOGIN:{
         return(
           <ModalWindow>
@@ -32,14 +25,7 @@ export default function ModalWindowWrapper({type}:{type:EModalContent}) {
             <Registration/>
           </ModalWindow>
         )
-      }
-      case EModalContent.REGISTRATION_SUCCESS:{
-        return(
-          <ModalWindow>
-            <RegistrationSuccess/>
-          </ModalWindow>
-        )
-      }    
+      }  
     }
   }
 

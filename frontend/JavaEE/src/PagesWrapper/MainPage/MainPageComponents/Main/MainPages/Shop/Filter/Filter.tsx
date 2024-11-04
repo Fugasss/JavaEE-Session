@@ -1,5 +1,9 @@
 export default function Filter() {
   return (
-    <aside></aside>
+    <aside className="bg-blue-200 w-1/5">
+      <div>
+        
+      </div>
+    </aside>
   )
 }

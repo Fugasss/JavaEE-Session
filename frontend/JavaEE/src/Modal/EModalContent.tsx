@@ -1,12 +1,8 @@
 
 enum EModalContent{
     NONE = "none" , 
-    LOGIN = "login",
-    LOGIN_SUCCESS = "login_success",
-    LOGIN_WARNING = "login_warning" , 
+    LOGIN = "login", 
     REGISTRATION = "registration" , 
-    REGISTRATION_SUCCESS = "registration_success",
-    REGISTRATION_WARNING = "registration_warning"
 
 }
 
