@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 # JavaEE-Session
 
 # Plukter (рабочее название)
@@ -45,4 +44,3 @@ Back-end : Go , MongoDB/PostgreSQL
 	Создание страницы логина .
 	Создание страницы с компонентами .
 	Создание страницы сборки .
->>>>>>> Stashed changes
