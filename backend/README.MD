@@ -21,4 +21,3 @@ spring.data.mongodb.database=backend
 ```
 
 <b><i>Данные для подключения к Postgres пока не нужны (их нет), можно не добавлять.</i></b>
-
