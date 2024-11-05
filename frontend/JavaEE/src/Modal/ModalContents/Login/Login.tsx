@@ -3,21 +3,23 @@ import { ModalContext } from "../../../App";
 import EModalContent from "../../EModalContent";
 import axios from "axios";
 import { EApi } from "../../../api/EApi";
+import Loanding from "../Registration/Loanding";
 
 const loginRequest = async () => {
   try {
       const response = await axios.get(EApi.default);
       console.log("Response:", response);
-      return response.status; // Возвращаем статус при успешном запросе
+      return response.status;
   } catch (error) {
       console.log("Error:", error);
-      return 500; // Возвращаем статус ошибки или 500, если статус недоступен
+      return 500; 
   }
 };
 
 export default function Login() {
 
     const [statusContent , setStatus] = useState(<div></div>)
+    const [isLoanding , setIsLoanding] = useState(false);
 
     const [loginData , setLoginData] = useState("");
     const [passwordData , setPasswordData] = useState("");
@@ -26,26 +28,31 @@ export default function Login() {
 
     const sendLoginRequest = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) =>{
       e.preventDefault();
-      setStatus(<p>Загрузка...</p>)
+
+      setIsLoanding(true);
+
       const statusCode = await loginRequest();
-        console.log(statusCode)
-        switch (statusCode!){
-          case axios.HttpStatusCode.Ok:{
-            setStatus(<p>Успешный Вход!</p>)
-            break;
-          }
-          case axios.HttpStatusCode.BadRequest:{
-            setStatus(<p>Что-то пошло не так...</p>)
-            break;
-          }
-          default :{
-            setStatus(<p>Что-то пошло не так...2 </p>)
-            console.log(statusCode)
-            break;
-          }
+
+      setIsLoanding(false);
+
+      console.log("Ответ сервера - " + statusCode)
+
+      switch (statusCode!){
+        case 200:{
+          setStatus(<p>Успешный Вход!</p>)
+          break;
         }
-      
-  
+        case 400:{
+          setStatus(<p>Что-то пошло не так...</p>)
+          break;
+        }
+        default :{
+          setStatus(<p>Что-то пошло не так...2 </p>)
+
+          console.log("Ошибка - неизветный код - " , statusCode)
+          break;
+        }
+      }
     }
 
   return (
@@ -64,9 +71,11 @@ export default function Login() {
                     value={passwordData} 
                     onChange={(e)=>{setPasswordData(e.target.value)}}/>
 
-            <button className="bg-blue-200 py-2 hover:bg-blue-300 mt-4" onClick={(e)=>{sendLoginRequest(e)}}>Войти</button>
+            <button className="bg-blue-200 py-2 hover:bg-blue-300 mt-4" disabled={isLoanding} onClick={(e)=>{sendLoginRequest(e)}}>
+              {isLoanding ? <Loanding/> : "Вход" }
+            </button>
             {statusContent}
-            <button className="underline text-gray-500" onClick={()=>{setModal(EModalContent.REGISTRATION)}}>Регистрация</button>
+            <button className="underline text-gray-500" disabled={isLoanding} onClick={()=>{setModal(EModalContent.REGISTRATION)}}>Регистрация</button>
         </div>
     </form>
   )
