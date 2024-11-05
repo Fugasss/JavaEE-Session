@@ -5,6 +5,7 @@ import com.plunker.backend.auth.dto.LoginRequest;
 import com.plunker.backend.auth.dto.RegistrationRequest;
 import com.plunker.backend.auth.models.Role;
 import com.plunker.backend.auth.models.User;
+import com.plunker.backend.auth.util.UserWithEmailAlreadyExists;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,7 +26,7 @@ public class AuthenticationService {
      * @param request данные пользователя
      * @return токен
      */
-    public JwtAuthenticationResponse register(RegistrationRequest request) {
+    public JwtAuthenticationResponse register(RegistrationRequest request) throws UserWithEmailAlreadyExists {
 
         var user = User.builder()
                 .email(request.getEmail())

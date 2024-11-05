@@ -6,16 +6,14 @@ import com.plunker.backend.auth.dto.RegistrationRequest;
 import com.plunker.backend.auth.services.AuthenticationService;
 import com.plunker.backend.auth.services.UserService;
 import com.plunker.backend.auth.models.User;
+import com.plunker.backend.auth.util.UserWithEmailAlreadyExists;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -26,7 +24,7 @@ public class    AuthController {
 
     @Operation(summary = "Регистрация пользователя")
     @PostMapping("/register")
-    public JwtAuthenticationResponse Register(@RequestBody @Valid RegistrationRequest request){
+    public JwtAuthenticationResponse Register(@RequestBody @Valid RegistrationRequest request) throws UserWithEmailAlreadyExists {
         return authenticationService.register(request);
     }
 

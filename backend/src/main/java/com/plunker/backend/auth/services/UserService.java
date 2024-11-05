@@ -48,7 +48,7 @@ public class UserService implements UserDetailsService{
         return userRepository.findAll();
     }
 
-    public User create(User user) {
+    public User create(User user) throws UserWithEmailAlreadyExists{
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
             throw new UserWithEmailAlreadyExists(user.getEmail());
         }
