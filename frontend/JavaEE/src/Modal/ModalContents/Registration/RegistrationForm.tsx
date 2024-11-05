@@ -3,6 +3,7 @@ import { useModal } from '../../../Hooks/contextHooks';
 import EModalContent from '../../EModalContent';
 import axios from 'axios';
 import { EApi } from '../../../api/EApi';
+import Loanding from './Loanding';
 
 const registrationRequest = async () => {
     try {
@@ -22,33 +23,43 @@ export default function RegistrationForm() {
     const [loginData , setLoginData] = useState("");
     const [passwordData , setPasswordData] = useState("");
 
-    const [statusContent , setStatusContent] = useState(<div></div>)
+    const [statusContent , setStatusContent] = useState(<div></div>);
+    const [isLoanding , setIsLoanding] = useState(false);
 
-    const sendRegistrationRequest = async () =>{
+    const sendRegistrationRequest = async (e : React.MouseEvent<HTMLButtonElement, MouseEvent>) =>{
 
-      setStatusContent(<p>Загрузка...</p>)
+      e.preventDefault();
+
+      setIsLoanding(true);
 
       const statusCode = await registrationRequest();
-        console.log(statusCode)
-        switch (statusCode){
-          case 200:{
-            setStatusContent(<p>Запись создана!</p>)
-            break;
-          }
-          case 409:{
-            setStatusContent(<p>Запись уже существует</p>)
-            break;
-          }
-          case 400:{
-            setStatusContent(<p>Что-то пошло не так...</p>)
-            break;
-          }
-          default :{
-            setStatusContent(<p>Что-то пошло не так...2 </p>)
-            console.log(statusCode)
-            break;
-          }
+
+      setIsLoanding(false);
+
+      console.log("Ответ сервера - " + statusCode)
+
+      switch (statusCode){
+        case 200:{
+          setModal(EModalContent.NONE)
+          break;
         }
+        case 409:{
+          setStatusContent(<p>Запись уже существует</p>)
+          break;
+        }
+        case 400:{
+          setStatusContent(<p>Что-то пошло не так...</p>)
+          break;
+        }
+        default :{
+          setStatusContent(<p>Что-то пошло не так... </p>)
+          console.log("Ошибка - неизветный код - " , statusCode)
+          setTimeout(()=>{
+            setStatusContent(<p>Ты Няшечка(*/ω＼*)</p>)
+          } , 5000)
+          break;
+        }
+      }
   }
 
     return(
@@ -67,16 +78,13 @@ export default function RegistrationForm() {
                         value={passwordData}
                         onChange={(e)=>{setPasswordData(e.target.value)}}/>
                         
-                <button className="bg-blue-200 py-2 hover:bg-blue-300 mt-4" onClick={(e)=>{
-                  
-                  e.preventDefault();
-                  sendRegistrationRequest();
-                
-                }}>Зарегистрироватся</button>
+                <button className="bg-blue-200 py-2 hover:bg-blue-300 mt-4 " disabled={isLoanding} onClick={(e)=>{sendRegistrationRequest(e)}}>
+                  {isLoanding ? <Loanding/> : "Зарегистрироваться" }
+                </button>
 
-                {statusContent}
+                <div className='text-center'>{statusContent}</div>
 
-                <button className="underline text-gray-500" onClick={()=>{setModal(EModalContent.REGISTRATION)}}>Вход</button>
+                <button className="underline text-gray-500" disabled={isLoanding} onClick={()=>{setModal(EModalContent.REGISTRATION)}}>Вход</button>
             </div>
         </form>
       )
