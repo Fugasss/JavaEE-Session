@@ -1,5 +1,11 @@
 # Backend Part
 
+## Swagger
+Документация по адрессу
+```
+http://localhost:8080/swagger-ui/
+```
+
 ### Подключение к MongoDB
 Создать в папке resources/ файл "db.properties" и заполнить данными для подключения по шаблону:
 ```properties
