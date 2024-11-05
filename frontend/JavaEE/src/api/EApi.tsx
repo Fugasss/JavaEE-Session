@@ -1,3 +1,7 @@
+
 export enum EApi{
-    default = "http://localhost:2525/" ,
+    DEFAULT = "http://localhost:8080/" ,
+    REGISTRATION = DEFAULT + "auth/register" ,
+    LOGIN = DEFAULT + "auth/login" ,
+    EXAMPLE = DEFAULT + "example" , 
 }

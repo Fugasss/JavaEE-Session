@@ -4,16 +4,29 @@ import EModalContent from "../../EModalContent";
 import axios from "axios";
 import { EApi } from "../../../api/EApi";
 import Loanding from "../Registration/Loanding";
+import { setCookie } from "../../../utils/cookie";
 
-const loginRequest = async () => {
+const loginRequest = async ( email :string , password :string) => {
   try {
-      const response = await axios.get(EApi.default);
-      console.log("Response:", response);
-      return response.status;
-  } catch (error) {
-      console.log("Error:", error);
-      return 500; 
+
+    const response = await axios.post(EApi.LOGIN , {email , password } );
+
+    const token : {jwt : string} = response.data;
+    setCookie("token" , token.jwt) ;
+
+    return response.status;
+
+} catch (error) {
+
+  if(axios.isAxiosError(error) && error.response){
+    
+    console.log("Ошибка с сервера - :", error.response.status);
+    return error.response.status; 
   }
+  else{
+    return 500; 
+  }
+}
 };
 
 export default function Login() {
@@ -31,7 +44,7 @@ export default function Login() {
 
       setIsLoanding(true);
 
-      const statusCode = await loginRequest();
+      const statusCode = await loginRequest( loginData , passwordData);
 
       setIsLoanding(false);
 

@@ -1,18 +1,31 @@
 import React, { useState } from 'react'
 import { useModal } from '../../../Hooks/contextHooks';
 import EModalContent from '../../EModalContent';
-import axios from 'axios';
+import axios, { Axios, AxiosError } from 'axios';
 import { EApi } from '../../../api/EApi';
 import Loanding from './Loanding';
+import { setCookie } from '../../../utils/cookie';
 
-const registrationRequest = async () => {
+const registrationRequest = async (email:string , password : string) => {
     try {
-        const response = await axios.get(EApi.default);
-        console.log("Response:", response);
+
+        const response = await axios.post(EApi.REGISTRATION , {email , password } );
+
+        const token : {jwt : string} = response.data;
+        setCookie("token" , token.jwt) ;
+
         return response.status;
+
     } catch (error) {
-        console.log("Error:", error);
+
+      if(axios.isAxiosError(error) && error.response){
+        
+        console.log("Ошибка с сервера - :", error.response.status);
+        return error.response.status; 
+      }
+      else{
         return 500; 
+      }
     }
   };
 
@@ -32,7 +45,7 @@ export default function RegistrationForm() {
 
       setIsLoanding(true);
 
-      const statusCode = await registrationRequest();
+      const statusCode = await registrationRequest(loginData , passwordData);
 
       setIsLoanding(false);
 
