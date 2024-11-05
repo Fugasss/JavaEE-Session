@@ -1,5 +1,6 @@
 import EModalContent from "./EModalContent"
-import LoginWarning from "./ModalContents/LoginWarning"
+import Login from "./ModalContents/Login/Login"
+import RegistrationForm from "./ModalContents/Registration/RegistrationForm"
 import ModalWindow from "./ModalWindow"
 
 export default function ModalWindowWrapper({type}:{type:EModalContent}) {
@@ -9,14 +10,20 @@ export default function ModalWindowWrapper({type}:{type:EModalContent}) {
       case EModalContent.NONE:{
         return <></>
       }
-      case EModalContent.LOGIN_WARNING:{
-        return (
+      case EModalContent.LOGIN:{
+        return(
           <ModalWindow>
-            <LoginWarning></LoginWarning>
-          </ModalWindow>
+          <Login/>
+        </ModalWindow>
         )
       }
-    
+      case EModalContent.REGISTRATION:{
+        return(
+          <ModalWindow>
+            <RegistrationForm/>
+          </ModalWindow>
+        )
+      }  
     }
   }
 

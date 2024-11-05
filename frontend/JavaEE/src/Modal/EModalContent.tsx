@@ -1,7 +1,8 @@
 
 enum EModalContent{
     NONE = "none" , 
-    LOGIN_WARNING = "login_warning" , 
+    LOGIN = "login", 
+    REGISTRATION = "registration" , 
 
 }
 
