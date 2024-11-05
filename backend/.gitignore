@@ -34,4 +34,4 @@ build/
 
 
 ### sensetive data ###
-!**/src/main/resources/db.properties
+db.properties
