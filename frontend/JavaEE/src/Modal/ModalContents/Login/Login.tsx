@@ -30,12 +30,17 @@ export default function Login() {
           setModal(EModalContent.LOGIN_SUCCESS)
           break;
         }
-        case 400:{
-          setStatus(<p>Что-то пошло не так...</p>)
+        case 400 :
+        case 404 :{
+          setStatus(<p>Указанный адрес не существует</p>)
+          break;
+        }
+        case 409:{
+          setStatus(<p>Неверные данные для входа</p>)
           break;
         }
         default :{
-          setStatus(<p>Что-то пошло не так...2 </p>)
+          setStatus(<p>Что-то пошло не так... </p>)
 
           console.log("Ошибка - неизветный код - " , statusCode)
           break;
