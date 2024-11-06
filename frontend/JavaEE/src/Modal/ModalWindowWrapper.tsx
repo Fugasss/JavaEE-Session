@@ -1,6 +1,8 @@
 import EModalContent from "./EModalContent"
 import Login from "./ModalContents/Login/Login"
+import LoginSuccess from "./ModalContents/Login/LoginSuccess"
 import RegistrationForm from "./ModalContents/Registration/RegistrationForm"
+import RegistrationSuccess from "./ModalContents/Registration/RegistrationSuccess"
 import ModalWindow from "./ModalWindow"
 
 export default function ModalWindowWrapper({type}:{type:EModalContent}) {
@@ -24,6 +26,20 @@ export default function ModalWindowWrapper({type}:{type:EModalContent}) {
           </ModalWindow>
         )
       }  
+      case EModalContent.LOGIN_SUCCESS:{
+        return(
+          <ModalWindow>
+            <LoginSuccess/>
+          </ModalWindow>
+        )
+      }
+      case EModalContent.REGISTRATION_SUCCESS:{
+        return(
+          <ModalWindow>
+            <RegistrationSuccess/>
+          </ModalWindow>
+        )
+      }
     }
   }
 

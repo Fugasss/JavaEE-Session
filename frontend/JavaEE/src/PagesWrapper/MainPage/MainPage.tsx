@@ -8,7 +8,7 @@ export default function MainPage() {
       <div className="ml-6 mb-10">
         <Header/>
         <Main/>
-        </div>
+      </div>
         <Footer/>
     </div>
   )

@@ -1,33 +1,8 @@
 import { useContext, useState } from "react";
 import { ModalContext } from "../../../App";
 import EModalContent from "../../EModalContent";
-import axios from "axios";
-import { EApi } from "../../../api/EApi";
 import Loanding from "../Registration/Loanding";
-import { setCookie } from "../../../utils/cookie";
-
-const loginRequest = async ( email :string , password :string) => {
-  try {
-
-    const response = await axios.post(EApi.LOGIN , {email , password } );
-
-    const token : {jwt : string} = response.data;
-    setCookie("token" , token.jwt) ;
-
-    return response.status;
-
-} catch (error) {
-
-  if(axios.isAxiosError(error) && error.response){
-    
-    console.log("Ошибка с сервера - :", error.response.status);
-    return error.response.status; 
-  }
-  else{
-    return 500; 
-  }
-}
-};
+import { loginRequest } from "../../../utils/verificationRequests";
 
 export default function Login() {
 
@@ -52,7 +27,7 @@ export default function Login() {
 
       switch (statusCode!){
         case 200:{
-          setStatus(<p>Успешный Вход!</p>)
+          setModal(EModalContent.LOGIN_SUCCESS)
           break;
         }
         case 400:{

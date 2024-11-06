@@ -1,33 +1,8 @@
 import React, { useState } from 'react'
 import { useModal } from '../../../Hooks/contextHooks';
 import EModalContent from '../../EModalContent';
-import axios, { Axios, AxiosError } from 'axios';
-import { EApi } from '../../../api/EApi';
 import Loanding from './Loanding';
-import { setCookie } from '../../../utils/cookie';
-
-const registrationRequest = async (email:string , password : string) => {
-    try {
-
-        const response = await axios.post(EApi.REGISTRATION , {email , password } );
-
-        const token : {jwt : string} = response.data;
-        setCookie("token" , token.jwt) ;
-
-        return response.status;
-
-    } catch (error) {
-
-      if(axios.isAxiosError(error) && error.response){
-        
-        console.log("Ошибка с сервера - :", error.response.status);
-        return error.response.status; 
-      }
-      else{
-        return 500; 
-      }
-    }
-  };
+import { registrationRequest } from '../../../utils/verificationRequests';
 
 export default function RegistrationForm() {
 
@@ -43,6 +18,15 @@ export default function RegistrationForm() {
 
       e.preventDefault();
 
+      if(loginData.length < 9){
+        setStatusContent(<p>Почта не действительна</p>)
+        return
+      }
+      if(passwordData.length < 10){
+        setStatusContent(<p>Пароль слишком короткий</p>)
+        return
+      }
+
       setIsLoanding(true);
 
       const statusCode = await registrationRequest(loginData , passwordData);
@@ -52,8 +36,8 @@ export default function RegistrationForm() {
       console.log("Ответ сервера - " + statusCode)
 
       switch (statusCode){
-        case 200:{
-          setModal(EModalContent.NONE)
+        case 201:{
+          setModal(EModalContent.REGISTRATION_SUCCESS)
           break;
         }
         case 409:{
@@ -61,7 +45,7 @@ export default function RegistrationForm() {
           break;
         }
         case 400:{
-          setStatusContent(<p>Что-то пошло не так...</p>)
+          setStatusContent(<p>Данные не действительны</p>)
           break;
         }
         default :{
