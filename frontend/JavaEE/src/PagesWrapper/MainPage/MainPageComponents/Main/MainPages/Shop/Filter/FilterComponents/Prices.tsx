@@ -1,23 +1,37 @@
-import React from 'react'
+import { useState } from "react";
+import DoubleRange from "./DoubleRange";
 
 export default function Prices() {
+
+    const rangeMin = 1000;
+    const rangeMax = 320000;
+
+    const [minValue, setMinValue] = useState(rangeMin);
+    const [maxValue, setMaxValue] = useState(rangeMax);
+
+    
+    
   return (
     <div className='flex flex-col gap-3'>
         <p>Цена</p>
-        <div className='flex'>
-            <div className='flex gap-2'>
+        <div className='flex gap-2'>
+            <div className='flex gap-2 w-full'>
                 <p>От:</p>
-                <input type="number"  />
+                <input type="number" value={minValue} className="px-2 w-full"/>
             </div>
-            <div className='flex'>
+            <div className='flex gap-2 w-full'>
                 <p>До:</p>
-                <input type="number" />
+                <input type="number" value={maxValue} className="px-2 w-full"/>
             </div>
         </div>
-        <div className='flex relative'>
-            <input type="range" min={1000} max={320000} className='price_range'/>
-            <input type="range" min={1000} max={320000} className='price_range absolute'/>
-        </div>
+        <DoubleRange maxValue={maxValue} 
+                     minValue={minValue} 
+                     rangeMin={rangeMin} 
+                     rangeMax={rangeMax} 
+                     rangeStep={1000} 
+                     setMin={setMinValue} 
+                     setMax={setMaxValue}/>
+        
     </div>
   )
 }

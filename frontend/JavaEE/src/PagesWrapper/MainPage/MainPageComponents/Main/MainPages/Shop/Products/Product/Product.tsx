@@ -8,7 +8,7 @@ export type TProduct ={
 
 export default function Product({title , img , price , description}:TProduct) {
   return (
-    <div className="bg-blue-200 w-1/3 p-2 flex-col">
+    <div className="bg-passive w-1/3 p-2 flex-col">
         <div className="w-full h-1/2">
             <img src={img} alt="" className="w-full h-full"/>
         </div>

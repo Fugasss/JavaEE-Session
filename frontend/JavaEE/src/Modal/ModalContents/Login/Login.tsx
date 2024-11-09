@@ -64,7 +64,7 @@ export default function Login() {
                     value={passwordData} 
                     onChange={(e)=>{setPasswordData(e.target.value)}}/>
 
-            <button className="bg-blue-200 py-2 hover:bg-blue-300 mt-4" disabled={isLoanding} onClick={(e)=>{sendLoginRequest(e)}}>
+            <button className="bg-passive py-2 hover:bg-blue-300 mt-4" disabled={isLoanding} onClick={(e)=>{sendLoginRequest(e)}}>
               {isLoanding ? <Loanding/> : "Вход" }
             </button>
             {statusContent}

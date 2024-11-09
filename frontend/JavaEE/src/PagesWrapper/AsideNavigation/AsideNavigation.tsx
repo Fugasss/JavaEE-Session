@@ -5,7 +5,7 @@ import Title from "./AsideNavigationComponents/Title";
 
 export default function AsideNavigation() {
   return (
-    <nav className="flex flex-col px-4 bg-blue-200 items-center">
+    <nav className="flex flex-col px-4 bg-passive items-center">
         <Title/>
         <Account></Account>
         <FastCourses/>
