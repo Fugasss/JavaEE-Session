@@ -4,14 +4,10 @@ import com.plunker.backend.basket.models.Product;
 import com.plunker.backend.basket.repositories.ProductRepository;
 import com.plunker.backend.basket.models.Component;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -89,6 +85,43 @@ public class ProductService {
     public Page<Product> getProductsSortedByTypeAndPriceDesc(Component type, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return productRepository.findByProductTypeOrderByPriceDesc(type, pageable);
+    }
+
+    /** Добавить продукт */
+    public boolean createProduct(Product product) {
+        try {
+            productRepository.save(product);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /** Удалить продукт */
+    public boolean removeProductById(String productId) {
+        try {
+            productRepository.deleteById(productId);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /** Обновить продукт */
+    public boolean updateProduct(Product product) {
+        try {
+            productRepository.save(product);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public Product getProductById(String id) {
+        return productRepository.findById(id).orElse(null);
     }
 
     // Найти продукты по стату (если этот метод будет актуален)
