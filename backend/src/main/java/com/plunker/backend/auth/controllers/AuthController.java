@@ -39,8 +39,7 @@ public class AuthController {
     @PostMapping("/login")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Пользователь успешно авторизован"),
-            @ApiResponse(responseCode = "400", description = "Отправлены некорректные данные", content = @Content(examples = {@ExampleObject("{\n\"message:\":\"Email адрес должен быть в формате name@example.com\"\n}")})),
-            @ApiResponse(responseCode = "401", description = "Пользователь не авторизован", content = @Content(examples = {@ExampleObject("{\n\"message:\":\"Bad credentials\"\n}")})),
+            @ApiResponse(responseCode = "400", description = "Пользователь не авторизован", content = @Content(examples = {@ExampleObject("{\n\"message:\":\"Bad credentials\"\n}")})),
     })
     @ResponseStatus(HttpStatus.OK)
     public JwtAuthenticationResponse Login(@RequestBody @Valid LoginRequest request) {
