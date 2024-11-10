@@ -43,7 +43,7 @@ public class User implements UserDetails{
     @Column(nullable = false)
     @ColumnDefault("")
     @URL
-    private String iconUrl;
+    private String iconUrl = "";
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
