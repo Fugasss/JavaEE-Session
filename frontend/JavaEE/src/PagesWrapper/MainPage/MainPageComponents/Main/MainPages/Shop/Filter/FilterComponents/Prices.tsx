@@ -14,7 +14,7 @@ export default function Prices() {
     
   return (
     <div className='flex flex-col gap-3'>
-        <p>Цена</p>
+        <p>Цена:</p>
         <div className='flex gap-2'>
             <div className='flex gap-2 w-full'>
                 <p>От:</p>
