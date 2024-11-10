@@ -5,7 +5,9 @@ import java.util.*;
 import com.plunker.backend.auth.models.Role;
 import com.plunker.backend.auth.models.User;
 import com.plunker.backend.auth.repositories.UserRepository;
+import com.plunker.backend.auth.util.UserOldAndNewPasswordsAreSame;
 import com.plunker.backend.auth.util.UserWithEmailAlreadyExists;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -82,7 +84,6 @@ public class UserService implements UserDetailsService{
         var email = SecurityContextHolder.getContext().getAuthentication().getName();
         return getByEmail(email);
     }
-
 
     /**
      * Выдача прав администратора текущему пользователю
