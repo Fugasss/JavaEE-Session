@@ -45,4 +45,6 @@ public class AuthController {
     public JwtAuthenticationResponse Login(@RequestBody @Valid LoginRequest request) {
         return authenticationService.login(request);
     }
+
+
 }

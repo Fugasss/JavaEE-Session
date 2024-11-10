@@ -1,5 +1,7 @@
 package com.plunker.backend.auth;
 
+import com.plunker.backend.auth.util.UserOldAndNewPasswordsAreSame;
+import com.plunker.backend.auth.util.UserWrongPassword;
 import com.plunker.backend.util.MessageResponse;
 import com.plunker.backend.auth.util.UserWithEmailAlreadyExists;
 import org.springframework.http.HttpStatus;
@@ -34,5 +36,10 @@ public class AuthAdvice {
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<MessageResponse> handleException(AuthenticationException e) {
         return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler({UserWrongPassword.class, UserOldAndNewPasswordsAreSame.class})
+    public ResponseEntity<MessageResponse> handleException(Exception e) {
+        return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }

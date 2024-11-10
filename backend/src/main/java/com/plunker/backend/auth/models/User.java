@@ -6,6 +6,11 @@ import java.util.List;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+import org.hibernate.validator.constraints.URL;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,6 +39,11 @@ public class User implements UserDetails{
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Column(nullable = false)
+    @ColumnDefault("")
+    @URL
+    private String iconUrl;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
