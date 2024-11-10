@@ -5,6 +5,7 @@ import com.plunker.backend.basket.repositories.ProductRepository;
 import com.plunker.backend.basket.models.Component;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class ProductService {
     }
 
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        return (List<Product>)productRepository.findAll(Sort.unsorted());
     }
 
     public List<Product> getProductsByPrice(int min, int max) {
