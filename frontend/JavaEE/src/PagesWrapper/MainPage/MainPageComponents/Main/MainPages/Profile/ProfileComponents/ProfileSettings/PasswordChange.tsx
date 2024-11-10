@@ -5,11 +5,17 @@ import { EApi } from '../../../../../../../../api/EApi';
 
 export default function PasswordChange() {
 
+    const [actualPassword , setActualPassword] = useState("");
     const [newPassword , setNewPassword] = useState("");
     const [newPasswordDublicate , setNewPasswordDublicate] = useState("");
 
     const [isLoanding , setIsLoanding] = useState(false);
     const [responseText , setResponseText] = useState("");
+
+    const handleActualPasswordChange = (e : React.ChangeEvent<HTMLInputElement>) =>{
+        e.preventDefault();
+        setActualPassword(e.target.value);
+    }
 
     const handlePasswordChange = (e : React.ChangeEvent<HTMLInputElement>) =>{
         e.preventDefault();
@@ -27,7 +33,7 @@ export default function PasswordChange() {
             if(newPassword == newPasswordDublicate){
                 setIsLoanding(true)
                 try{
-                    const result = await axios.put(EApi.CHANGE_PASSWORD , { newPassword })
+                    const result = await axios.put(EApi.CHANGE_PASSWORD , { actualPassword , newPassword })
                     setResponseText("Ваш пароль изменен!")
                 }
                 catch(err){
@@ -51,6 +57,7 @@ export default function PasswordChange() {
   return (
     <>
     <p>Изменить пароль :</p>
+    <input type='password' placeholder='Старый пароль...' className='p-2' value={actualPassword} onChange={handleActualPasswordChange}/>
     <input type='password' placeholder='Новый пароль...' className='p-2' value={newPassword} onChange={handlePasswordChange}/>
     <input type='password' placeholder='Повторите пароль...' className='p-2' value={newPasswordDublicate} onChange={handlePasswordDublicateChange}/>
     <button className='bg-active_light p-1 hover:bg-active' onClick={ submitNewPassword} disabled={isLoanding}>{ isLoanding ? <Loanding/> : <p>Изменить</p>}</button>
