@@ -2,7 +2,9 @@ package com.plunker.backend.basket.services;
 
 import com.plunker.backend.basket.models.Order;
 import com.plunker.backend.basket.repositories.OrderRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +20,7 @@ public class OrderService {
     }
 
     public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+        return (List<Order>)orderRepository.findAll(Sort.unsorted());
     }
 
     public List<Order> getSoldOrdersByUserID(String id) {
