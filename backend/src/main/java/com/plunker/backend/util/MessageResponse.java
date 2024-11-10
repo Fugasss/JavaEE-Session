@@ -1,4 +1,4 @@
-package com.plunker.backend.auth.util;
+package com.plunker.backend.util;
 
 
 public record MessageResponse(String message) { }
