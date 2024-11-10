@@ -1,10 +1,9 @@
 package com.plunker.backend.auth.services;
 
 import com.plunker.backend.auth.models.User;
-import com.plunker.backend.auth.repositories.UserRepository;
 import com.plunker.backend.auth.util.UserOldAndNewPasswordsAreSame;
 import com.plunker.backend.auth.util.UserWrongPassword;
-import jakarta.validation.constraints.NotBlank;
+import com.plunker.backend.util.WrongData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,6 +28,18 @@ public class ChangeUserService {
         }
 
         user.setPassword(passwordEncoder.encode(newPassword));
+
+        userService.save(user);
+    }
+
+    public void updateIconUrl(String newIconUrl) {
+        User user = userService.getCurrentUser();
+
+        if(newIconUrl == null || newIconUrl.isEmpty()) {
+            throw new WrongData();
+        }
+
+        user.setIconUrl(newIconUrl);
 
         userService.save(user);
     }
