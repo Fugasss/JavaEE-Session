@@ -5,7 +5,7 @@ export class Verificator{
 
     registrationRequest = async () => {
         try {
-            const response = await axios.get(EApi.default);
+            const response =  axios.get(EApi.default);
             console.log("Response:", response);
             return response.status;
         } catch (error) {

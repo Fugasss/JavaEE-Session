@@ -1,11 +1,13 @@
+import Bukket from "./AccountComponents/Bukket";
 import LoginButton from "./AccountComponents/LoginButton";
-import Profile from "./AccountComponents/Profile";
+import ProfileButton from "./AccountComponents/ProfileButton";
 
 export default function Account() {
   return (
     <div className="flex items-center gap-4 p-3">
       <LoginButton/>
-      <Profile/>
+      <Bukket/>
+      <ProfileButton/>
     </div>
   )
 }

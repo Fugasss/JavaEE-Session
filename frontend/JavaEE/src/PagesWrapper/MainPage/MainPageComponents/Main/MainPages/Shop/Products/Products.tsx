@@ -1,4 +1,7 @@
+import { useEffect } from "react"
 import Product, { TProduct } from "./Product/Product"
+import axios from "axios"
+import { EApi } from "../../../../../../../api/EApi"
 
 export default function Products() {
 
@@ -8,6 +11,10 @@ export default function Products() {
         description:"Видеокарта", 
         price: 1200 , 
     }]
+
+    useEffect(()=>{
+      axios.get(EApi.PRODUCTS)
+    },[])
 
   return (
     <section>

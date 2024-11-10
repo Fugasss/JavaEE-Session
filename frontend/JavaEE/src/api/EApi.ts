@@ -4,4 +4,7 @@ export enum EApi{
     REGISTRATION = DEFAULT + "auth/register" ,
     LOGIN = DEFAULT + "auth/login" ,
     EXAMPLE = DEFAULT + "example" , 
+    PRODUCTS = DEFAULT + "orders" , 
+    PROFILE = DEFAULT + "profile" , 
+    CHANGE_PASSWORD = PROFILE + "/change_password" ,  
 }
