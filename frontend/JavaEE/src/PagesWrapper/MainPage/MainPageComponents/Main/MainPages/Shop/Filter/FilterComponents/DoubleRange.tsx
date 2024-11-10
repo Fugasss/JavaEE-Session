@@ -12,8 +12,8 @@ type DoupleRangeProps ={
 
 export default function DoubleRange({rangeMin ,rangeMax ,rangeStep , maxValue ,minValue ,setMax ,setMin}:DoupleRangeProps) {
 
-    const minPercent = ((minValue - rangeMin) / (rangeMax - rangeMin)) * 100;
-    const maxPercent = ((maxValue - rangeMin) / (rangeMax - rangeMin)) * 100;
+    let minPercent = ((minValue - rangeMin) / (rangeMax - rangeMin)) * 100;
+    let maxPercent = ((maxValue - rangeMin) / (rangeMax - rangeMin)) * 100;
 
     const handleMinChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         const value = Number(e.target.value);
