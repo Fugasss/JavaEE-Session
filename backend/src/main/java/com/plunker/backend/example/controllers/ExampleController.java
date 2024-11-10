@@ -1,6 +1,7 @@
 package com.plunker.backend.example.controllers;
 
 import com.plunker.backend.auth.services.UserService;
+import com.plunker.backend.basket.repositories.ProductRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Аутентификация")
 public class ExampleController {
     private final UserService service;
+    private final ProductRepository productRepository;
 
     @GetMapping
     @Operation(summary = "Доступен только авторизованным пользователям")
@@ -33,5 +35,8 @@ public class ExampleController {
     @Operation(summary = "Получить роль ADMIN (для демонстрации)")
     public void getAdmin() {
         service.getAdmin();
+    }
+
+    public void AddProduct() {
     }
 }
