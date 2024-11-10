@@ -1,6 +1,6 @@
 package com.plunker.backend.auth;
 
-import com.plunker.backend.auth.util.MessageResponse;
+import com.plunker.backend.util.MessageResponse;
 import com.plunker.backend.auth.util.UserWithEmailAlreadyExists;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
