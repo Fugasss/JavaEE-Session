@@ -2,16 +2,11 @@ package com.plunker.backend.admin.dto;
 
 import com.plunker.backend.basket.models.Component;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.*;
 
-@Builder
-@Getter
-@Setter
 @Data
-@Tag(name = "Админка")
 public class UpdateProductRequest{
 
     @Schema(description = "ID продукта", example = "58b26bf9-5f74-4e05-996d-e47030ac72ee")

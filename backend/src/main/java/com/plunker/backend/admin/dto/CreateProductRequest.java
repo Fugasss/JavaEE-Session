@@ -2,17 +2,9 @@ package com.plunker.backend.admin.dto;
 
 import com.plunker.backend.basket.models.Component;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-@Builder
-@Getter
-@Setter
 @Data
-@Tag(name = "Админка")
 public class CreateProductRequest {
 
     @Schema(description = "Название продукта", example = "RTX 3070")
