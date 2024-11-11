@@ -42,4 +42,14 @@ public class OrderService {
         Pageable pageable = PageRequest.of(page, size);
         return orderRepository.findByUserId(id, pageable);
     }
+
+    public boolean createOrder(Order order) {
+        try {
+            orderRepository.save(order);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
 }
