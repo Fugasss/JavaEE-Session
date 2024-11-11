@@ -59,4 +59,10 @@ public class AuthenticationService {
         var jwt = jwtService.generateToken(user);
         return new JwtAuthenticationResponse(jwt);
     }
+
+    public boolean verifyToken(String token) {
+        User user = userService.getCurrentUser();
+        return jwtService.isTokenValid(token, user);
+    }
+
 }
