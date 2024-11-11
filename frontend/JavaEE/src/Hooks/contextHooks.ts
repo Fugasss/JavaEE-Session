@@ -1,6 +1,10 @@
 import { useContext } from "react";
-import { ModalContext } from "../App";
+import { LoginStatusContext, ModalContext } from "../App";
 
 export function useModal() {
     return useContext(ModalContext);
+}
+
+export function useLoginStatus(){
+    return useContext(LoginStatusContext);
 }
