@@ -8,13 +8,15 @@ export type TProduct ={
 
 export default function Product({title , img , price , description}:TProduct) {
   return (
-    <div className="bg-passive w-1/3 p-2 flex-col">
-        <div className="w-full h-1/2">
+    <div className="bg-passive w-1/6 p-4 flex-col">
+        <div className="w-full">
             <img src={img} alt="" className="w-full h-full"/>
         </div>
-        <h1 className="font-bold text-2xl">{title}</h1>
-        <p>{description}</p>
-        <div className="float-right text-4xl">{price}</div>
+        <div className="flex flex-col justify-between content-between flex-1">
+          <h1 className="font-bold text-2xl">{title}</h1>
+          <p>{description}</p>
+          <p className="text-4xl">{price}</p>
+        </div>
     </div>
   )
 }

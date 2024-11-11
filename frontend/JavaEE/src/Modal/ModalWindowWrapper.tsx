@@ -40,6 +40,13 @@ export default function ModalWindowWrapper({type}:{type:EModalContent}) {
           </ModalWindow>
         )
       }
+      case EModalContent.RECOVER_PASSWORD:{
+        return(
+          <ModalWindow>
+            <></>
+          </ModalWindow>
+        )
+      }
     }
   }
 

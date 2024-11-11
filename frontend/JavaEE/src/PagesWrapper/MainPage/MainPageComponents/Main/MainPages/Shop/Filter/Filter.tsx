@@ -1,5 +1,4 @@
 import FilterSearch from "./FilterComponents/FilterSearch";
-import PartSelector from "./FilterComponents/DropdownSelector";
 import Prices from "./FilterComponents/Prices";
 import DropdownSelector from "./FilterComponents/DropdownSelector";
 

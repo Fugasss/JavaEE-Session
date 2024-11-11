@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Product, { TProduct } from "./Product/Product"
 import axios, { isAxiosError } from "axios"
 import { EApi } from "../../../../../../../api/EApi"
 import Loanding from "../../../../../../../Modal/ModalContents/Registration/Loanding"
+import { FilterContext } from "../Shop"
 
 type ApiProduct = {
   productId: string , 
@@ -16,20 +17,20 @@ type ApiProduct = {
 
 export default function Products() {
 
-    const [ productsData , setProductsData] = useState(<Loanding/>)
+    const filterParams = useContext(FilterContext)
 
-    const data : [TProduct] = [{
-        title: "RTX9090",
-        img: "https://avatars.mds.yandex.net/i?id=ea51929c823e3664940d25afce97b1640999ef90-10586727-images-thumbs&n=13" , 
-        description:"Видеокарта", 
-        price: 1200 , 
-    }]
+    const [ productsData , setProductsData] = useState(<Loanding/>)
 
     const fetchProducts =  async () => {
       try{
-        const response : ApiProduct[]  =  (await axios.get(EApi.PRODUCTS)).data
-        console.log(response)
-        setProductsData(<>{response.map( item => { <Product title={item.productName} description={item.productInfo} img="" price={item.price}/>} )}</>)
+        const response : ApiProduct[]  =  ((await axios.get(EApi.PRODUCTS , {params : filterParams} )).data["content"])
+        console.log()
+        if(response.length >0){
+          setProductsData(<>{response.map( item => <Product title={item.productName} description={item.productInfo.slice(0,30) + "..."} img="https://avatars.mds.yandex.net/i?id=33b583fddf2d60115cbd8d3d4225e8083370d176-10477521-images-thumbs&n=13" price={item.price}/>)}</>);
+        }
+        else{
+          setProductsData(<p>Нет товаров по вашему запросу :(</p>)
+        }
       }
       catch(err){
         if(isAxiosError(err)){
@@ -44,8 +45,8 @@ export default function Products() {
 
   return (
     <section>
-        <div className="flex flex-wrap">
-            {productsData}
+        <div className="flex flex-wrap gap-4">
+          {productsData}         
         </div>
     </section>
   )
