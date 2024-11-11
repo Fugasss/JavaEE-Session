@@ -1,9 +1,13 @@
 package com.plunker.backend.basket.services;
 
 import com.plunker.backend.basket.models.Order;
+import com.plunker.backend.basket.models.Product;
 import com.plunker.backend.basket.repositories.OrderRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -19,19 +23,23 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public List<Order> getAllOrders() {
-        return (List<Order>)orderRepository.findAll(Sort.unsorted());
+    public Page<Order> getAllOrders(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return orderRepository.findAll(pageable);
     }
 
-    public List<Order> getSoldOrdersByUserID(String id) {
-        return orderRepository.findByUserIdAndSoldTrue(id);
+    public Page<Order> getSoldOrdersByUserID(String id, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return orderRepository.findByUserIdAndSoldTrue(id, pageable);
     }
 
-    public List<Order> getSoldUnsoldByUserID(String id) {
-        return orderRepository.findByUserIdAndSoldFalse(id);
+    public Page<Order> getSoldUnsoldByUserID(String id, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return orderRepository.findByUserIdAndSoldFalse(id, pageable);
     }
     
-    public List<Order> getAllOrdersByUserID(String id) {
-        return orderRepository.findByUserId(id);
+    public Page<Order> getAllOrdersByUserID(String id, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return orderRepository.findByUserId(id, pageable);
     }
 }

@@ -28,7 +28,7 @@ public class ProductController {
 
     @GetMapping("")
     public Page<Product> GetProducts(
-        @RequestParam(defaultValue = "1") int page, 
+        @RequestParam(defaultValue = "0") int page, 
         @RequestParam(defaultValue = "1") int size,
         @RequestParam(defaultValue = "0") int min,
         @RequestParam(defaultValue = "-1") int max,
@@ -43,7 +43,7 @@ public class ProductController {
             defaultType = false;
         }
 
-        if (type.equals("deault") || defaultType == false){
+        if (type.equals("default") || defaultType == false){
             if (max == -1) {
                 return productService.getAllProducts(page, size);
             } else {
