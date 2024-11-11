@@ -21,6 +21,9 @@ public class JwtService {
     @Value("${token.signing.key}")
     private String jwtSecretKey;
 
+    @Value("${token.signing.lifetime}")
+    private int jwtExpritationMilis;
+
     public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -68,7 +71,7 @@ public class JwtService {
     public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
         return Jwts.builder().claims(claims).subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 100000 * 60 * 24))
+                .expiration(new Date(System.currentTimeMillis() + jwtExpritationMilis))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 }
