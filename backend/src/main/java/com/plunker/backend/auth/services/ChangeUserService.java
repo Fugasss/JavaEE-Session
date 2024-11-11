@@ -43,4 +43,8 @@ public class ChangeUserService {
 
         userService.save(user);
     }
+
+    public void sendRecoverPasswordEmailRequest(String email){
+
+    }
 }
