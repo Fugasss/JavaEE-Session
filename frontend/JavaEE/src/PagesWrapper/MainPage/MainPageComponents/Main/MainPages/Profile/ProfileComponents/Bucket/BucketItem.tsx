@@ -1,5 +1,5 @@
 
-type TBucketItem = {
+export type TBucketItem = {
   title :string , 
   image : string , 
   desc : string , 

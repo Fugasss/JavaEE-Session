@@ -7,4 +7,5 @@ export enum EApi{
     PRODUCTS = DEFAULT + "orders" , 
     PROFILE = DEFAULT + "profile" , 
     CHANGE_PASSWORD = PROFILE + "/change_password" ,  
+    BUCKET = PROFILE + "/bucket" ,  
 }

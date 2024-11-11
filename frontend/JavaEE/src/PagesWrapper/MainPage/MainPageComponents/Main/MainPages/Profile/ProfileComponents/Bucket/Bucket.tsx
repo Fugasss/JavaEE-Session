@@ -1,21 +1,45 @@
-import BucketItem from './BucketItem'
+import { useEffect, useState } from 'react'
+import BucketItem, { TBucketItem } from './BucketItem'
+import Loanding from '../../../../../../../../Modal/ModalContents/Registration/Loanding'
+import axios, { isAxiosError } from 'axios'
+import { EApi } from '../../../../../../../../api/EApi'
 
 export default function Bucket() {
+
+  const [bucketContent , setBucketContent] = useState(<p className='text-center p-10'>Ваша корзина пуста...</p>)
+
+  useEffect(()=>{
+
+    const fetchBucket =  async () => {
+      setBucketContent(<Loanding/>)
+      try{
+        const result: TBucketItem[] = (await axios.get(EApi.BUCKET)).data;
+        if (result){
+          setBucketContent(<>{result.map( item => <BucketItem title={item.title} image={item.image} desc={item.desc} price={item.price} status={item.status}/>)}</>)
+        }
+        else {
+          setBucketContent(<p className='text-center p-10'>Ваша корзина пуста...</p>)
+        }
+      }
+      catch(err){
+        if (isAxiosError(err)){
+          console.log(err.code)
+          setBucketContent(<p className='text-center p-10'>Ошибка...</p>)
+        }
+      }
+    }
+
+    fetchBucket();
+  } , [])
+
   return (
     <div className='flex flex-col bg-passive p-4 w-full'>
         <div className='flex w-full justify-between  mb-2'>
           <p className='font-bold text-2xl'>Корзина</p>
           <button className='bg-active p-2 px-4'>Заказать все</button>
         </div>
-        <ul className='flex flex-col gap-4 overflow-scroll'>
-            <BucketItem title='RTX2080' image='https://avatars.mds.yandex.net/i?id=ea001baf70b9cf1acf25b608af204e9d_l-5488843-images-thumbs&n=13' desc='PCI-E Gigabyte GeForce RTX 2080 AORUS 8192MB 256bit GDDR6 [GV-N2080AORUS-8GC] HDMI DP' price='320000' status='OK'/>
-            <BucketItem title='RTX2080' image='https://avatars.mds.yandex.net/i?id=ea001baf70b9cf1acf25b608af204e9d_l-5488843-images-thumbs&n=13' desc='PCI-E Gigabyte GeForce RTX 2080 AORUS 8192MB 256bit GDDR6 [GV-N2080AORUS-8GC] HDMI DP' price='320000' status='OK'/>
-            <BucketItem title='RTX2080' image='https://avatars.mds.yandex.net/i?id=ea001baf70b9cf1acf25b608af204e9d_l-5488843-images-thumbs&n=13' desc='PCI-E Gigabyte GeForce RTX 2080 AORUS 8192MB 256bit GDDR6 [GV-N2080AORUS-8GC] HDMI DP' price='320000' status='OK'/>
-            <BucketItem title='RTX2080' image='https://avatars.mds.yandex.net/i?id=ea001baf70b9cf1acf25b608af204e9d_l-5488843-images-thumbs&n=13' desc='PCI-E Gigabyte GeForce RTX 2080 AORUS 8192MB 256bit GDDR6 [GV-N2080AORUS-8GC] HDMI DP' price='320000' status='OK'/>
-            <BucketItem title='RTX2080' image='https://avatars.mds.yandex.net/i?id=ea001baf70b9cf1acf25b608af204e9d_l-5488843-images-thumbs&n=13' desc='PCI-E Gigabyte GeForce RTX 2080 AORUS 8192MB 256bit GDDR6 [GV-N2080AORUS-8GC] HDMI DP' price='320000' status='OK'/>
-            <BucketItem title='RTX2080' image='https://avatars.mds.yandex.net/i?id=ea001baf70b9cf1acf25b608af204e9d_l-5488843-images-thumbs&n=13' desc='PCI-E Gigabyte GeForce RTX 2080 AORUS 8192MB 256bit GDDR6 [GV-N2080AORUS-8GC] HDMI DP' price='320000' status='OK'/>
-            <BucketItem title='RTX2080' image='https://avatars.mds.yandex.net/i?id=ea001baf70b9cf1acf25b608af204e9d_l-5488843-images-thumbs&n=13' desc='PCI-E Gigabyte GeForce RTX 2080 AORUS 8192MB 256bit GDDR6 [GV-N2080AORUS-8GC] HDMI DP' price='320000' status='OK'/>
-            <BucketItem title='RTX2080' image='https://avatars.mds.yandex.net/i?id=ea001baf70b9cf1acf25b608af204e9d_l-5488843-images-thumbs&n=13' desc='PCI-E Gigabyte GeForce RTX 2080 AORUS 8192MB 256bit GDDR6 [GV-N2080AORUS-8GC] HDMI DP' price='320000' status='OK'/>
+        <ul className='flex flex-col gap-4 overflow-y-scroll'>
+          {bucketContent}
         </ul>
     </div>
   )
