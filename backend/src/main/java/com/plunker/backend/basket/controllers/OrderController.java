@@ -5,7 +5,9 @@ import com.plunker.backend.basket.models.Order;
 import com.plunker.backend.basket.models.Product;
 import com.plunker.backend.basket.services.OrderService;
 import com.plunker.backend.basket.services.ProductService;
+import com.plunker.backend.basket.dto.OrderRequest;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +38,28 @@ public class OrderController {
     }
 
     @PostMapping("/new")
-    public void AddOrder(@RequestParam String productID) {
-        var order = Order.builder()
-        .sold(false)
-        .userId(userService
-        .getCurrentUser()
-        .getId())
-        .product(productService.getProductById(productID))
-        .build();
+    public void AddOrder(@RequestBody OrderRequest orderRequest) {
+        String productID = orderRequest.getProductId();
+
+        System.out.println("\n\n\n\n\n\n\n\n\n\n");
+
+        try{
+            var order = Order.builder()
+            .sold(false)
+            .userId(userService.getCurrentUser().getId())
+            .product(productService.getProductById(productID))
+            .build();
+
+            System.out.println(order);
+
         orderService.createOrder(order);
+        }catch(Exception e){
+        
+            System.out.println(e.getMessage());
+            System.out.println(productID);
+            System.out.println("\n\n\n\n\n\n\n\n\n\n");
+
+        }
+        
     }
 }

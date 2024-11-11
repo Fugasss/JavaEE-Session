@@ -4,11 +4,7 @@ import com.plunker.backend.basket.models.Product;
 import com.plunker.backend.basket.models.Component;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-<<<<<<< Updated upstream
 import org.springframework.data.jpa.repository.JpaRepository;
-=======
-import org.springframework.data.repository.PagingAndSortingRepository;
->>>>>>> Stashed changes
 import org.springframework.stereotype.Repository;
 
 

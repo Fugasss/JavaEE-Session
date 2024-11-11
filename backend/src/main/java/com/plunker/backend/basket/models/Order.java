@@ -13,6 +13,7 @@ import lombok.*;
 public class Order {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "ORDER_ID", nullable = false)
     private String orderId;
 
