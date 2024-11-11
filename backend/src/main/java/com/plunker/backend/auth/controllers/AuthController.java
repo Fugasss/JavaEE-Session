@@ -4,6 +4,7 @@ import com.plunker.backend.auth.dto.JwtAuthenticationResponse;
 import com.plunker.backend.auth.dto.LoginRequest;
 import com.plunker.backend.auth.dto.RegistrationRequest;
 import com.plunker.backend.auth.services.AuthenticationService;
+import com.plunker.backend.auth.util.JwtTokenExpired;
 import com.plunker.backend.auth.util.UserWithEmailAlreadyExists;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -46,5 +47,19 @@ public class AuthController {
         return authenticationService.login(request);
     }
 
+    @Operation(summary = "Проверка валидности токена")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Токен валиден"),
+            @ApiResponse(responseCode = "401", description = "Токен не валиден"),
+    })
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/verify")
+    public void Verify(@RequestHeader("Authorization") String jwtToken){
+        String clearToken = jwtToken.substring("Bearer ".length());
+
+        if (!authenticationService.verifyToken(clearToken)) {
+            throw new JwtTokenExpired();
+        }
+    }
 
 }
