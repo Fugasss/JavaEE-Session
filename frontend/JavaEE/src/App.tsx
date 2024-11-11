@@ -6,7 +6,8 @@ import MainPage from "./PagesWrapper/MainPage/MainPage"
 export const ModalContext = createContext<Function>(()=>{})
 
 function App() {
-  const[modalType , setModal] = useState(EModalContent.LOGIN)
+
+  const[ modalType , setModal ] = useState(EModalContent.LOGIN)
 
   return (
     <>
