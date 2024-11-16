@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
-import { ModalContext } from "../../../App";
 import EModalContent from "../../EModalContent";
 import Loanding from "../Registration/Loanding";
 import { loginRequest } from "../../../utils/verificationRequests";
 import TextField from "../FormComponents/TextField";
+import { useLoginStatus, useModal } from "../../../Hooks/contextHooks";
 
 export default function Login() {
 
@@ -12,8 +12,9 @@ export default function Login() {
 
     const [emailData , setEmailData] = useState("");
     const [passwordData , setPasswordData] = useState("");
-
-    const setModal = useContext(ModalContext);
+    
+    const {isLogined , setIsLogined} = useLoginStatus();
+    const setModal = useModal()
 
     const sendLoginRequest = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) =>{
       e.preventDefault();
@@ -28,6 +29,8 @@ export default function Login() {
 
       switch (statusCode!){
         case 200:{
+          
+          setIsLogined(true);
           setModal(EModalContent.LOGIN_SUCCESS)
           break;
         }

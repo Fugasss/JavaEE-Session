@@ -1,4 +1,3 @@
-import React from 'react'
 
 type TTextFieldProps = {
     title? : string ,
@@ -15,7 +14,7 @@ export default function TextField({title , input_type , placeholder , value , ha
     <input type={input_type} className="w-full border-b-2 p-2" 
             placeholder={placeholder} 
             value={value}
-            onChange={ e=> handler(e)}/>
+            onChange={ e=> handler(e.target.value)}/>
     </>
   )
 }

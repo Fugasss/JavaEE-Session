@@ -3,6 +3,7 @@ import BucketItem, { TBucketItem } from './BucketItem'
 import Loanding from '../../../../../../../../Modal/ModalContents/Registration/Loanding'
 import axios, { isAxiosError } from 'axios'
 import { EApi } from '../../../../../../../../api/EApi'
+import axiosApi from '../../../../../../../../utils/axiosApi'
 
 export default function Bucket() {
 
@@ -13,7 +14,7 @@ export default function Bucket() {
     const fetchBucket =  async () => {
       setBucketContent(<Loanding/>)
       try{
-        const result: TBucketItem[] = (await axios.get(EApi.BUCKET)).data;
+        const result: TBucketItem[] = (await axiosApi.get(EApi.BUCKET)).data;
         if (result){
           setBucketContent(<>{result.map( item => <BucketItem title={item.title} image={item.image} desc={item.desc} price={item.price} status={item.status}/>)}</>)
         }

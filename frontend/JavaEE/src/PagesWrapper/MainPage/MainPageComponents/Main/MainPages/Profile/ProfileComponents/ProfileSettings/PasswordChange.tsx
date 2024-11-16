@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Loanding from '../../../../../../../../Modal/ModalContents/Registration/Loanding';
 import axios, { isAxiosError } from 'axios';
 import { EApi } from '../../../../../../../../api/EApi';
+import axiosApi from '../../../../../../../../utils/axiosApi';
 
 export default function PasswordChange() {
 
@@ -33,11 +34,12 @@ export default function PasswordChange() {
             if(newPassword == newPasswordDublicate){
                 setIsLoanding(true)
                 try{
-                    const result = await axios.put(EApi.CHANGE_PASSWORD , { actualPassword , newPassword })
+                    const result = await axiosApi.put(EApi.CHANGE_PASSWORD , { oldPassword : actualPassword , newPassword })
                     setResponseText("Ваш пароль изменен!")
                 }
                 catch(err){
                     if(isAxiosError(err)){
+                        console.log(err)
                         setResponseText("Ошибка")
                     }
                 }
@@ -60,7 +62,7 @@ export default function PasswordChange() {
     <input type='password' placeholder='Старый пароль...' className='p-2' value={actualPassword} onChange={handleActualPasswordChange}/>
     <input type='password' placeholder='Новый пароль...' className='p-2' value={newPassword} onChange={handlePasswordChange}/>
     <input type='password' placeholder='Повторите пароль...' className='p-2' value={newPasswordDublicate} onChange={handlePasswordDublicateChange}/>
-    <button className='bg-active_light p-1 hover:bg-active' onClick={ submitNewPassword} disabled={isLoanding}>{ isLoanding ? <Loanding/> : <p>Изменить</p>}</button>
+    <button className='bg-active_light p-1 hover:bg-active' onClick={ submitNewPassword } disabled={isLoanding}>{ isLoanding ? <Loanding/> : <p>Изменить</p>}</button>
     <p className='font-bold'>{responseText}</p>
     </>
   )

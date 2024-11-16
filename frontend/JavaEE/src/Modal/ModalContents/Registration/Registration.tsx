@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useModal } from '../../../Hooks/contextHooks';
+import { useLoginStatus, useModal } from '../../../Hooks/contextHooks';
 import EModalContent from '../../EModalContent';
 import Loanding from './Loanding';
 import { registrationRequest } from '../../../utils/verificationRequests';
@@ -8,6 +8,7 @@ import TextField from '../FormComponents/TextField';
 export default function Registration() {
 
     const setModal = useModal();
+    const {isLogined , setIsLogined} = useLoginStatus();
 
     const [emailData , setEmailData] = useState("");
     const [passwordData , setPasswordData] = useState("");
@@ -38,7 +39,9 @@ export default function Registration() {
 
       switch (statusCode){
         case 201:{
+          setIsLogined(true);
           setModal(EModalContent.REGISTRATION_SUCCESS)
+
           break;
         }
         case 409:{

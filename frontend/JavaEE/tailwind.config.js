@@ -13,6 +13,7 @@ module.exports = {
         'active_light' : "rgb(120, 180, 255)",
         'active_dark' : "rgb(80, 140, 255)",
         'passive' : "rgb(191,219,254)" , 
+        'warn' : "rgb(180,50,50)" , 
       }
     },
   },

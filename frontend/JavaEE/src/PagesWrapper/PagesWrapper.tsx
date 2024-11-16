@@ -1,10 +1,23 @@
-import AsideNavigation from "./AsideNavigation/AsideNavigation";
+import { createContext, useState } from "react";
+import EModalContent from "../Modal/EModalContent";
+import ModalWindowWrapper from "../Modal/ModalWindowWrapper";
 import MainPage from "./MainPage/MainPage";
 
+export const ModalContext = createContext<Function>(()=>{})
+
 export default function PagesWrapper() {
+
+  const[ modalType , setModal ] = useState(EModalContent.LOGIN)
+
   return (
     <div className="flex min-h-screen">
-      <MainPage/>
+      <ModalContext.Provider value={setModal}>
+
+        <MainPage/>
+        
+        <ModalWindowWrapper type={modalType}/>
+
+      </ModalContext.Provider>
     </div>
   )
 }
