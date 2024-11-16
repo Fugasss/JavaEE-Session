@@ -37,6 +37,7 @@ public class EmailSenderService {
 
         MimeMessage mimeMessage = emailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
+        messageHelper.setFrom("noreply@plukter.com");
         messageHelper.setTo(toAddress);
         messageHelper.setSubject(subject);
         messageHelper.setText(message);

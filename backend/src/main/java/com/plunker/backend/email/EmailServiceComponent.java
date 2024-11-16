@@ -1,7 +1,5 @@
 package com.plunker.backend.email;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -13,8 +11,6 @@ import java.util.Properties;
 @Component
 public class EmailServiceComponent {
 
-    private final Logger logger = LoggerFactory.getLogger(EmailServiceComponent.class);
-
     @Value("${spring.mail.username}")
     private String email;
 
@@ -23,8 +19,6 @@ public class EmailServiceComponent {
 
     @Bean
     public JavaMailSender getMailSender() {
-
-        logger.debug("EMAIL: %s\tAPP PASSWORD: %s".formatted(email, password));
 
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");

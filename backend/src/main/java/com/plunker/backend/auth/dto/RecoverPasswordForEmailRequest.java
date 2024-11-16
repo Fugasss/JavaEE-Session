@@ -4,7 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-@Schema(description = "Запрос на смену пароля")
-public class RecoverPasswordRequest {
+public class RecoverPasswordForEmailRequest {
+
+    @Schema(description = "Почта пользователя")
     private String email;
 }

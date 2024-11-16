@@ -1,24 +1,34 @@
 package com.plunker.backend.auth.services;
 
+import com.plunker.backend.auth.models.RecoverPasswordToken;
 import com.plunker.backend.auth.models.User;
+import com.plunker.backend.auth.repositories.RecoverPasswordTokenRepository;
 import com.plunker.backend.auth.util.UserOldAndNewPasswordsAreSame;
 import com.plunker.backend.auth.util.UserWrongPassword;
+import com.plunker.backend.email.EmailSenderService;
 import com.plunker.backend.util.WrongData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ChangeUserService {
 
+    private final int RECOVER_TOKEN_EXPIRES_IN_MINUTES = 10;
+
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final EmailSenderService emailSenderService;
+    private final RecoverPasswordTokenRepository recoverPasswordTokenRepository;
 
-    public void updatePassword( String oldPassword, String newPassword) throws UserOldAndNewPasswordsAreSame {
+    public void updatePassword(String oldPassword, String newPassword) throws UserOldAndNewPasswordsAreSame {
         User user = userService.getCurrentUser();
 
-        if(!passwordEncoder.matches(oldPassword, user.getPassword())) {
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
             throw new UserWrongPassword();
         }
 
@@ -35,7 +45,7 @@ public class ChangeUserService {
     public void updateIconUrl(String newIconUrl) {
         User user = userService.getCurrentUser();
 
-        if(newIconUrl == null || newIconUrl.isEmpty()) {
+        if (newIconUrl == null || newIconUrl.isEmpty()) {
             throw new WrongData();
         }
 
@@ -44,7 +54,33 @@ public class ChangeUserService {
         userService.save(user);
     }
 
-    public void sendRecoverPasswordEmailRequest(String email){
+    public void sendRecoverPasswordEmailRequest(String email) {
 
+        RecoverPasswordToken newToken = RecoverPasswordToken.builder()
+                .email(email)
+                .expirationDate(new Date(System.currentTimeMillis() + RECOVER_TOKEN_EXPIRES_IN_MINUTES * 60))
+                .build();
+
+        newToken = recoverPasswordTokenRepository.save(newToken);
+
+        String subject = "Recover Password";
+        String address = "http://localhost:5173/recover?token={%s}".formatted(newToken.getToken());
+        String message = "Open this link to recover your password: {%s}".formatted(address);
+
+        emailSenderService.sendSimpleEmail(email, subject, message);
+    }
+
+    public void updatePasswordWithToken(String token, String newPassword) {
+        Optional<RecoverPasswordToken> recoverToken = recoverPasswordTokenRepository.findById(token);
+
+        if (recoverToken.isEmpty()) {
+            throw new WrongData();
+        }
+
+        RecoverPasswordToken actualToken = recoverToken.get();
+
+        User user = userService.getByEmail(actualToken.getEmail());
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userService.save(user);
     }
 }
