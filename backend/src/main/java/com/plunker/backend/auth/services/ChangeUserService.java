@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -58,28 +59,27 @@ public class ChangeUserService {
 
         RecoverPasswordToken newToken = RecoverPasswordToken.builder()
                 .email(email)
-                .expirationDate(new Date(System.currentTimeMillis() + RECOVER_TOKEN_EXPIRES_IN_MINUTES * 60))
+                .token(UUID.randomUUID().toString())
+                .expirationDate(new Date(System.currentTimeMillis() + RECOVER_TOKEN_EXPIRES_IN_MINUTES * 60 * 1000))
                 .build();
 
         newToken = recoverPasswordTokenRepository.save(newToken);
 
         String subject = "Recover Password";
-        String address = "http://localhost:5173/recover?token={%s}".formatted(newToken.getToken());
-        String message = "Open this link to recover your password: {%s}".formatted(address);
+        String address = "http://localhost:5173/recover?token=%s".formatted(newToken.getToken());
+        String message = "Open this link to recover your password: %s".formatted(address);
 
         emailSenderService.sendSimpleEmail(email, subject, message);
     }
 
     public void updatePasswordWithToken(String token, String newPassword) {
-        Optional<RecoverPasswordToken> recoverToken = recoverPasswordTokenRepository.findById(token);
+        RecoverPasswordToken recoverToken = recoverPasswordTokenRepository.findByToken(token);
 
-        if (recoverToken.isEmpty()) {
+        if (recoverToken == null) {
             throw new WrongData();
         }
 
-        RecoverPasswordToken actualToken = recoverToken.get();
-
-        User user = userService.getByEmail(actualToken.getEmail());
+        User user = userService.getByEmail(recoverToken.getEmail());
         user.setPassword(passwordEncoder.encode(newPassword));
         userService.save(user);
     }
