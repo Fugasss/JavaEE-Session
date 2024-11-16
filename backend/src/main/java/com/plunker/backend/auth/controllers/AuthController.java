@@ -55,7 +55,7 @@ public class AuthController {
     @Operation(summary = "Отправить письмо для восстановление пароля")
     @PostMapping("/recover-confirmation")
     public void RecoverPasswordByToken(@RequestBody @Valid RecoverPasswordByTokenRequest request) {
-        changeUserService.updatePasswordWithToken(request.getRecoverToken(), request.getNewPassword());
+        changeUserService.updatePasswordWithToken(request.getToken(), request.getPassword());
     }
 
 

@@ -7,8 +7,8 @@ import lombok.Data;
 @Schema(description = "Запрос на восстановления пароля с использованием токена")
 public class RecoverPasswordByTokenRequest {
     @Schema(description = "Этот токен приходит на почту к пользователю")
-    private String recoverToken;
+    private String token;
 
     @Schema(description = "Новый пароль")
-    private String newPassword;
+    private String password;
 }
