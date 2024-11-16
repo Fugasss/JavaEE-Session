@@ -1,5 +1,6 @@
 package com.plunker.backend.auth;
 
+import com.plunker.backend.auth.util.JwtTokenExpired;
 import com.plunker.backend.auth.util.UserOldAndNewPasswordsAreSame;
 import com.plunker.backend.auth.util.UserWrongPassword;
 import com.plunker.backend.util.MessageResponse;
@@ -33,8 +34,13 @@ public class AuthAdvice {
         return new ResponseEntity<>(new MessageResponse(sb.toString()), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(AuthenticationException.class)
+    @ExceptionHandler({AuthenticationException.class})
     public ResponseEntity<MessageResponse> handleException(AuthenticationException e) {
+        return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler({JwtTokenExpired.class})
+    public ResponseEntity<MessageResponse> handleException(JwtTokenExpired e) {
         return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.UNAUTHORIZED);
     }
 
@@ -42,4 +48,6 @@ public class AuthAdvice {
     public ResponseEntity<MessageResponse> handleException(Exception e) {
         return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
+
+
 }
