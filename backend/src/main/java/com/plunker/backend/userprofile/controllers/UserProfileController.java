@@ -25,6 +25,7 @@ public class UserProfileController {
 
         profileData.setEmail(currentUser.getEmail());
         profileData.setIconUrl(currentUser.getIconUrl());
+        profileData.setRole(currentUser.getRole());
 
         return profileData;
     }
