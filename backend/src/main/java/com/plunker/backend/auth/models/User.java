@@ -41,9 +41,9 @@ public class User implements UserDetails{
     private Role role;
 
     @Column(nullable = false)
-    @ColumnDefault("")
+    @ColumnDefault("https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg")
     @URL
-    private String iconUrl = "";
+    private String iconUrl = "https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg";
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -73,5 +73,12 @@ public class User implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @PrePersist
+    public void VerifyIconUrl(){
+        if(iconUrl == null || iconUrl.isEmpty()){
+            iconUrl = "https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg";
+        }
     }
 }
