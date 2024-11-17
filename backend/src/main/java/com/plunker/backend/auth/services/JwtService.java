@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -39,23 +40,21 @@ public class JwtService {
     }
 
     private boolean isTokenExpired(String token) {
-        boolean before = extractExpiration(token).before(new Date());
-        return before;
+        return extractExpiration(token).before(new Date());
     }
 
     private Date extractExpiration(String token) {
-        Date date = extractClaim(token, Claims::getExpiration);
-        return date;
+        return extractClaim(token, Claims::getExpiration);
     }
 
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(getSigningKey()).build()
+                .verifyWith(getSigningKey()).build()
                 .parseSignedClaims(token)
                 .getPayload();
     }
 
-    private Key getSigningKey() {
+    private SecretKey getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSecretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
@@ -76,6 +75,6 @@ public class JwtService {
         return Jwts.builder().claims(claims).subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + jwtExpirationMillis))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
+                .signWith(getSigningKey(), Jwts.SIG.HS256).compact();
     }
 }
