@@ -1,5 +1,7 @@
 package com.plunker.backend.basket.controllers;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,19 +68,20 @@ public class ProductController {
             }
         }
 
-        if(!tag.equals("default")) {
+        if (!tag.equals("default")) {
             List<Product> container = result.getContent();
-
-            for(int i = container.size() - 1; i >= 0; i--) {
+            List<Product> filteredProducts = new ArrayList<>();
+            
+            for (Product product : container) {
                 Pattern pattern = Pattern.compile(".+" + tag + ".+", Pattern.CASE_INSENSITIVE);
-                Matcher matcher = pattern.matcher(container.get(i).getProductInfo());
-                
-                if(!matcher.find()) {
-                    container.remove(i);
+                Matcher matcher = pattern.matcher(product.getProductInfo());
+
+                if (matcher.find()) {
+                    filteredProducts.add(product);
                 }
             }
-            
-            result = new PageImpl<Product>(container);
+        
+            result = new PageImpl<>(filteredProducts, PageRequest.of(page, size), filteredProducts.size());
         }
 
         return result;
