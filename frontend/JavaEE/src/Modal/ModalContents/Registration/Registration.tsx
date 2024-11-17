@@ -75,6 +75,7 @@ export default function Registration() {
                 <div className='text-center'>{statusContent}</div>
 
                 <button className="underline text-gray-500" disabled={isLoanding} onClick={()=>{setModal(EModalContent.REGISTRATION)}}>Вход</button>
+                <button className="underline text-gray-500" disabled={isLoanding} onClick={()=>{setModal(EModalContent.RECOVER_PASSWORD)}}>Забыли пароль?</button>
             </div>
         </form>
       )

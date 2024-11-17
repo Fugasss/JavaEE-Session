@@ -1,16 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DoubleRange from "./DoubleRange";
+import { TFilterParams } from "../../Shop";
 
-export default function Prices() {
+export default function Prices({paramsChanges}:{paramsChanges:TFilterParams}) {
 
-    const rangeMin = 1000;
-    const rangeStep = 1000;
-    const rangeMax = 320000;
+  const rangeMin = 1000;
+  const rangeStep = 1000;
+  const rangeMax = 320000;
 
-    const [minValue, setMinValue] = useState(rangeMin);
-    const [maxValue, setMaxValue] = useState(rangeMax);
+  const [minValue, setMinValue] = useState(rangeMin);
+  const [maxValue, setMaxValue] = useState(rangeMax); 
 
-    
+  useEffect(()=>{
+    paramsChanges.min = minValue
+    paramsChanges.max = maxValue
+  } , [minValue , maxValue])
     
   return (
     <div className='flex flex-col gap-3'>

@@ -15,14 +15,11 @@ function App() {
 
   
   return (
-    <>
-    
     <LoginStatusContext.Provider value={{isLogined , setIsLogined }}>
 
       <PagesWrapper/>
     
-    </LoginStatusContext.Provider>
-    </>  
+    </LoginStatusContext.Provider>  
   )
 }
 

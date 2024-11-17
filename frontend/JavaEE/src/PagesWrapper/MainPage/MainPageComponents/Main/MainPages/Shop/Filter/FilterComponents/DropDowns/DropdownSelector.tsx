@@ -1,8 +1,15 @@
 import { useState } from "react";
 
-export default function DropdownSelector({partList , title} : {partList: string[] , title?:string}){
+export type TDropdownSelector = {
+  partList: string[] , 
+  title?:string , 
+  currentSelection : string , 
+  setSelection : Function
+}
 
-  const [currentSelection , setSelection] = useState(partList[0]);
+export default function DropdownSelector({partList , title , currentSelection , setSelection} : TDropdownSelector){
+
+
   const [isListVisible , setListVisability] = useState(false);
 
   const openDropdown = () => {

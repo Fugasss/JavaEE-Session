@@ -1,54 +1,44 @@
-import { useContext, useEffect, useState } from "react"
-import Product, { TProduct } from "./Product/Product"
-import axios, { isAxiosError } from "axios"
-import { EApi } from "../../../../../../../api/EApi"
-import Loanding from "../../../../../../../Modal/ModalContents/Registration/Loanding"
-import { FilterContext } from "../Shop"
-import axiosApi from "../../../../../../../utils/axiosApi"
-
-type ApiProduct = {
-  productId: string , 
-  productName: string , 
-  productType: string , 
-  productInfo: string , 
-  price: number ,
-  discount: number ,
-  stock: number ,
+import { TFilterParams } from "../Shop";
+export type TProducts = {
+  productsData : JSX.Element , 
+  maxPages : number , 
+  filterParams : TFilterParams , 
+  setFilterParams : Function ,
 }
+export default function Products( {productsData , maxPages , filterParams ,setFilterParams} : TProducts) {
 
-export default function Products() {
+  const createPaginationArray = (maxNumber : number) => {
 
-    const filterParams = useContext(FilterContext)
+    const resultArray = []
 
-    const [ productsData , setProductsData] = useState(<Loanding/>)
-
-    const fetchProducts =  async () => {
-      try{
-        const response : ApiProduct[]  =  ((await axiosApi.get(EApi.PRODUCTS , {params : filterParams} )).data["content"])
-        console.log()
-        if(response.length >0){
-          setProductsData(<>{response.map( item => <Product title={item.productName} description={item.productInfo.slice(0,30) + "..."} img="https://avatars.mds.yandex.net/i?id=33b583fddf2d60115cbd8d3d4225e8083370d176-10477521-images-thumbs&n=13" price={item.price}/>)}</>);
-        }
-        else{
-          setProductsData(<p>Нет товаров по вашему запросу :(</p>)
-        }
-      }
-      catch(err){
-        if(isAxiosError(err)){
-          console.log(err.code)
-        }
-      }
+    for (let i = 1; i < maxNumber+1; i++) {
+      resultArray.push(i)
     }
+    console.log(maxNumber)
+    return resultArray
+  }
 
-    useEffect(()=>{
-      fetchProducts();  
-    },[])
+  const changePage = (e : React.MouseEvent<HTMLButtonElement, MouseEvent> , newPage : number) =>{
+    e.preventDefault();
+    const newFilter = filterParams
+    newFilter.page = newPage
+    setFilterParams({...newFilter})
+  }
 
+  const paginationSequence = createPaginationArray(maxPages); 
+  console.log(paginationSequence)
   return (
     <section>
+      <div className="flex flex-col">
         <div className="flex flex-wrap gap-4">
           {productsData}         
         </div>
+        <nav>
+          <div className="flex m-2 gap-1">
+            { paginationSequence.map(item=> <button className="bg-passive  p-2 hover:bg-active disabled:bg-active_dark" disabled={filterParams.page+1==item} onClick={(e)=>{changePage(e,item-1)}}>{item}</button>) }
+          </div>
+        </nav>
+      </div>
     </section>
   )
 }
