@@ -87,6 +87,16 @@ public class ProductService {
         return productRepository.findByProductTypeOrderByPriceDesc(type, pageable);
     }
 
+    public Page<Product> findAllByProductNameContainingIgnoreCaseAndPriceBetweenOrderByPriceAsc(String tag, int min, int max , int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return productRepository.findAllByProductNameContainingIgnoreCaseAndPriceBetweenOrderByPriceAsc(tag, min, max, pageable);
+    }
+
+    public Page<Product> getProductsByProductNameContainingIgnoreCaseAndProductTypeAndPriceBetweenOrderByPriceAsc(String tag,Component type, int min, int max , int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return productRepository.findAllByProductNameContainingIgnoreCaseAndProductTypeAndPriceBetweenOrderByPriceAsc(tag, type, min, max, pageable);
+    }
+
     /** Добавить продукт */
     public boolean createProduct(Product product) {
         try {
