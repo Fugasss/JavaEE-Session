@@ -5,7 +5,8 @@ export enum EApi{
     REGISTRATION = DEFAULT + "auth/register" ,
     LOGIN = DEFAULT + "auth/login" ,
     VERIFY_TOKEN = DEFAULT + "auth/verify" ,
-    RECOVER = DEFAULT + "recover-request",
+    RECOVER = DEFAULT + "auth/recover-request",
+    RECOVER_CONFIRM = DEFAULT + "auth/recover-confirmation",
 
     PRODUCTS = DEFAULT + "products" , 
 
@@ -14,4 +15,5 @@ export enum EApi{
     CHANGE_AVATAR = PROFILE + "/change-icon" ,
     BUCKET = PROFILE + "/bucket" ,  
 
+    ADMIN = DEFAULT + "admin/product"
 }

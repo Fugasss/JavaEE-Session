@@ -5,7 +5,7 @@ import Loanding from "../../../../../../Modal/ModalContents/Registration/Loandin
 import Product from "./Products/Product/Product";
 import axiosApi from "../../../../../../utils/axiosApi";
 import { EApi } from "../../../../../../api/EApi";
-import { isAxiosError } from "axios";
+import axios, { isAxiosError } from "axios";
 
 export type TFilterParams = {
   max : number , 
@@ -13,6 +13,7 @@ export type TFilterParams = {
   page : number ,
   size : number ,
   type? : string ,
+  tag? : string , 
 }
 
 const defaultFilter : TFilterParams = {
@@ -20,6 +21,7 @@ const defaultFilter : TFilterParams = {
   min : 0 ,
   page : 0 ,
   size : 4 , 
+
 }
 
 type ApiProduct = {
@@ -44,7 +46,7 @@ export default function Shop() {
   const fetchProducts =  async () => {
     try{
 
-      const response =  (await axiosApi.get(EApi.PRODUCTS , {params : filterParams} )).data
+      const response =  (await axios.get(EApi.PRODUCTS , {params : filterParams} )).data
       const products : ApiProduct[] = response["content"]
       setMaxPages(Number(response["totalPages"]));
 

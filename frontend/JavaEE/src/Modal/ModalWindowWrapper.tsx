@@ -1,6 +1,7 @@
 import EModalContent from "./EModalContent"
 import Login from "./ModalContents/Login/Login"
 import LoginSuccess from "./ModalContents/Login/LoginSuccess"
+import RecoverConfirm from "./ModalContents/RecoverPassword/RecoverConfirm"
 import RecoverPassword from "./ModalContents/RecoverPassword/RecoverPassword"
 import Registration from "./ModalContents/Registration/Registration"
 import RegistrationSuccess from "./ModalContents/Registration/RegistrationSuccess"
@@ -45,6 +46,13 @@ export default function ModalWindowWrapper({type}:{type:EModalContent}) {
         return(
           <ModalWindow>
             <RecoverPassword/>
+          </ModalWindow>
+        )
+      }
+      case EModalContent.RECOVER_CONFIRM:{
+        return(
+          <ModalWindow unclosed>
+            <RecoverConfirm/>
           </ModalWindow>
         )
       }

@@ -11,10 +11,10 @@ export default function Filter( { setFilterParams , paramsChanges} : {setFilterP
   return (
     <aside className="bg-passive w-full">
       <div className="flex flex-col gap-6 p-6 ">
-        <FilterSearch />
+        <FilterSearch paramsChanges={paramsChanges}/>
         <PartsDropdown paramsChanges={paramsChanges}/>
         <Prices paramsChanges={paramsChanges}/>
-        <button className="bg-active p-3" onClick={() => {console.log(paramsChanges);setFilterParams({...paramsChanges})}}>Применить изменения</button>
+        <button className="bg-active p-3" onClick={() => {setFilterParams({...paramsChanges})}}>Применить изменения</button>
       </div>
     </aside>
   )

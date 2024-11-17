@@ -1,9 +1,18 @@
+import { useState } from "react";
+import { TFilterParams } from "../../Shop";
 
-export default function FilterSearch() {
+export default function FilterSearch({paramsChanges}:{paramsChanges:TFilterParams}) {
+
+  const [tag , setTag] = useState("")
+
+  const tagChangeHandler = (e : React.ChangeEvent<HTMLInputElement>) => {
+    paramsChanges.tag = e.target.value ;
+    setTag(e.target.value) ;
+  }
+
   return (
     <div className="flex w-full">
-        <input type="text" className="p-1 mr-3 w-full" placeholder="Ключевое слово..."/>
-        <button className="bg-active py-1 px-3 hover:bg-active_light"> Найти </button>
+        <input type="text" className="p-1 w-full" placeholder="Ключевое слово..." value={tag} onChange={e => tagChangeHandler(e)}/>
     </div>
   )
 }
