@@ -22,7 +22,7 @@ public class JwtService {
     private String jwtSecretKey;
 
     @Value("${token.signing.lifetime}")
-    private int jwtExpritationMilis;
+    private int jwtExpirationMillis;
 
     public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -49,8 +49,10 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
-                .getBody();
+        return Jwts.parser()
+                .setSigningKey(getSigningKey()).build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     private Key getSigningKey() {
@@ -73,7 +75,7 @@ public class JwtService {
     public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
         return Jwts.builder().claims(claims).subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + jwtExpritationMilis))
+                .expiration(new Date(System.currentTimeMillis() + jwtExpirationMillis))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 }

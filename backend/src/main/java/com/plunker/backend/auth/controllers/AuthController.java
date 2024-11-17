@@ -64,7 +64,6 @@ public class AuthController {
             @ApiResponse(responseCode = "200", description = "Токен валиден"),
             @ApiResponse(responseCode = "401", description = "Токен не валиден"),
     })
-  
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/verify")
     public void Verify(@RequestHeader("Authorization") String jwtToken){

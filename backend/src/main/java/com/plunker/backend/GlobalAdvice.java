@@ -7,11 +7,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Date;
+
 @RestControllerAdvice
 public class GlobalAdvice {
 
     @ExceptionHandler({WrongData.class})
     public ResponseEntity<MessageResponse> handleException(Exception e) {
-        return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new MessageResponse(
+                e.getMessage(),
+                HttpStatus.BAD_REQUEST
+        ), HttpStatus.BAD_REQUEST);
     }
 }

@@ -9,6 +9,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,7 +21,10 @@ public class AuthAdvice {
 
     @ExceptionHandler(UserWithEmailAlreadyExists.class)
     public ResponseEntity<MessageResponse> handleException(UserWithEmailAlreadyExists e) {
-        return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(new MessageResponse(
+                e.getMessage(),
+                HttpStatus.CONFLICT
+        ), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -32,16 +36,33 @@ public class AuthAdvice {
             sb.append(error.getDefaultMessage()).append(System.lineSeparator());
         }
 
-        return new ResponseEntity<>(new MessageResponse(sb.toString()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new MessageResponse(
+                sb.toString(),
+                HttpStatus.BAD_REQUEST
+        ), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<MessageResponse> handleUserNotFoundException(UsernameNotFoundException e) {
+        return new ResponseEntity<>(new MessageResponse(
+                e.getMessage(),
+                HttpStatus.NOT_FOUND
+        ), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({AuthenticationException.class, JwtTokenExpired.class, ExpiredJwtException.class})
     public ResponseEntity<MessageResponse> unauthorizedException(Exception e) {
-        return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(new MessageResponse(
+                e.getMessage(),
+                HttpStatus.UNAUTHORIZED
+        ), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler({UserWrongPassword.class, UserOldAndNewPasswordsAreSame.class})
     public ResponseEntity<MessageResponse> handleException(Exception e) {
-        return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new MessageResponse(
+                e.getMessage(),
+                HttpStatus.BAD_REQUEST
+        ), HttpStatus.BAD_REQUEST);
     }
 }
