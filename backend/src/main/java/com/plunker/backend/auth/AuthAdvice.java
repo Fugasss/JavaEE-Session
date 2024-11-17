@@ -5,6 +5,7 @@ import com.plunker.backend.auth.util.UserOldAndNewPasswordsAreSame;
 import com.plunker.backend.auth.util.UserWrongPassword;
 import com.plunker.backend.util.MessageResponse;
 import com.plunker.backend.auth.util.UserWithEmailAlreadyExists;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -34,13 +35,8 @@ public class AuthAdvice {
         return new ResponseEntity<>(new MessageResponse(sb.toString()), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({AuthenticationException.class})
-    public ResponseEntity<MessageResponse> handleException(AuthenticationException e) {
-        return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.UNAUTHORIZED);
-    }
-
-    @ExceptionHandler({JwtTokenExpired.class})
-    public ResponseEntity<MessageResponse> handleException(JwtTokenExpired e) {
+    @ExceptionHandler({AuthenticationException.class, JwtTokenExpired.class, ExpiredJwtException.class})
+    public ResponseEntity<MessageResponse> unauthorizedException(Exception e) {
         return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.UNAUTHORIZED);
     }
 
@@ -48,6 +44,4 @@ public class AuthAdvice {
     public ResponseEntity<MessageResponse> handleException(Exception e) {
         return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
-
-
 }
