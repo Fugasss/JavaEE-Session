@@ -36,55 +36,33 @@ public class ProductController {
 
     @GetMapping("")
     public Page<Product> GetProducts(
-        @RequestParam(defaultValue = "0") int page, 
-        @RequestParam(defaultValue = "1") int size,
-        @RequestParam(defaultValue = "0") int min,
-        @RequestParam(defaultValue = "-1") int max,
-        @RequestParam(defaultValue = "default") String type,
-        @RequestParam(defaultValue = "default") String tag) {
-        
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int size,
+            @RequestParam(defaultValue = "0") int min,
+            @RequestParam(defaultValue = "-1") int max,
+            @RequestParam(defaultValue = "default") String type,
+            @RequestParam(defaultValue = "default") String tag
+    ) {
+        if(max == -1){
+            max = Integer.MAX_VALUE;
+        }
+
         Component component = null;
-        boolean defaultType = true;
-        Page<Product> result;
+        boolean defaultType;
 
         try {
             component = Component.valueOf(type);
-        } catch (IllegalArgumentException e) {
             defaultType = false;
+
+        } catch (IllegalArgumentException e) {
+            defaultType = true;
         }
 
-        if (type.equals("default") || defaultType == false){
-            if (max == -1) {
-                result = productService.getAllProducts(page, size);
-            } else {
-                result = productService.getProductsByPriceRangeAsc(min, max, page, size);
-            }
+        if (defaultType) {
+            return productService.findAllByProductNameContainingIgnoreCaseAndPriceBetweenOrderByPriceAsc(tag, min, max, page, size);
         } else {
-
-            if (max == -1) {
-                result = productService.getProductsByPriceAsc(page, size, component);
-            } else {
-                result = productService.getProductsByPriceAndTypeAsc(min, max, component, page, size);
-            }
+            return productService.getProductsByProductNameContainingIgnoreCaseAndProductTypeAndPriceBetweenOrderByPriceAsc(tag, component, min, max, page, size);
         }
-
-        if (!tag.equals("default")) {
-            List<Product> container = result.getContent();
-            List<Product> filteredProducts = new ArrayList<>();
-            
-            for (Product product : container) {
-                Pattern pattern = Pattern.compile(".+" + tag + ".+", Pattern.CASE_INSENSITIVE);
-                Matcher matcher = pattern.matcher(product.getProductInfo());
-
-                if (matcher.find()) {
-                    filteredProducts.add(product);
-                }
-            }
-        
-            result = new PageImpl<>(filteredProducts, PageRequest.of(page, size), filteredProducts.size());
-        }
-
-        return result;
     }
-    
+
 }
