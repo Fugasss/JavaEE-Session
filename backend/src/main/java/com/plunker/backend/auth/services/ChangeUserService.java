@@ -8,6 +8,7 @@ import com.plunker.backend.auth.util.UserWrongPassword;
 import com.plunker.backend.email.EmailSenderService;
 import com.plunker.backend.util.WrongData;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +58,10 @@ public class ChangeUserService {
 
     public void sendRecoverPasswordEmailRequest(String email) {
 
+        if(!userService.userWithEmailExists(email)){
+            throw new UsernameNotFoundException(email);
+        }
+
         RecoverPasswordToken newToken = RecoverPasswordToken.builder()
                 .email(email)
                 .token(UUID.randomUUID().toString())
@@ -82,5 +87,7 @@ public class ChangeUserService {
         User user = userService.getByEmail(recoverToken.getEmail());
         user.setPassword(passwordEncoder.encode(newPassword));
         userService.save(user);
+
+        recoverPasswordTokenRepository.deleteByToken(token);
     }
 }
