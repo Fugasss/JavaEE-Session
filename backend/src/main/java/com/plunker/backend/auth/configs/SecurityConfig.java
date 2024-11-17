@@ -1,6 +1,7 @@
 package com.plunker.backend.auth.configs;
 
 
+import com.plunker.backend.GlobalExceptionHandler;
 import com.plunker.backend.auth.JwtAuthenticationFilter;
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
