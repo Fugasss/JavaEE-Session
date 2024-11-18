@@ -4,6 +4,7 @@ import { ERoutes } from "../../../../api/ERoutes";
 import Profile from "./MainPages/Profile/Profile";
 import RecoverPage from "./MainPages/Recover/RecoverPage";
 import Admin from "./MainPages/Admin/Admin";
+import PageNotFound from "./MainPages/PageNotFound/PageNotFound";
 export default function Main() {
   return (
     <main className="flex-1">
@@ -13,6 +14,7 @@ export default function Main() {
           <Route path={ERoutes.PROFILE} element={<Profile/>}/>
           <Route path={ERoutes.RECOVER} element={<RecoverPage/>}/>
           <Route path={ERoutes.ADMIN} element={<Admin/>}/>
+          <Route path="*" element={<PageNotFound/>}/>
         </Routes>
       </div>
     </main>

@@ -1,9 +1,8 @@
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Filter from "./Filter/Filter";
 import Products from "./Products/Products";
 import Loanding from "../../../../../../Modal/ModalContents/Registration/Loanding";
 import Product from "./Products/Product/Product";
-import axiosApi from "../../../../../../utils/axiosApi";
 import { EApi } from "../../../../../../api/EApi";
 import axios, { isAxiosError } from "axios";
 
@@ -21,7 +20,6 @@ const defaultFilter : TFilterParams = {
   min : 0 ,
   page : 0 ,
   size : 4 , 
-
 }
 
 type ApiProduct = {
@@ -40,8 +38,6 @@ export default function Shop() {
   const [ maxPages, setMaxPages] = useState(0)
 
   const [ productsData , setProductsData] = useState(<Loanding/>)
-
-
 
   const fetchProducts =  async () => {
     try{

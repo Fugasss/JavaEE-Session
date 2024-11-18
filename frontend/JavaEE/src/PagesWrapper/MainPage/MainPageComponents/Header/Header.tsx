@@ -1,6 +1,5 @@
 import Navigation from "../../../AsideNavigation/AsideNavigationComponents/Navigation";
 import Account from "./HeaderComponents/Account/Account";
-import Search from "./HeaderComponents/Search/Search";
 
 export default function Header() {
   return (
@@ -10,7 +9,7 @@ export default function Header() {
             <Navigation/>
           </div>
           <div className="w-4/12">
-            <Search/>
+            {/* <Search/> */}
           </div>
           <div className="w-2/12 ml-10">
             <Account/>
