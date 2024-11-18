@@ -15,7 +15,10 @@ export default function Product({title , img , price , description}:TProduct) {
         <div className="flex flex-col justify-between content-between flex-1">
           <h1 className="font-bold text-2xl">{title}</h1>
           <p>{description}</p>
-          <p className="text-4xl">{price}</p>
+          <div className="flex w-full justify-between">
+            <p className="text-4xl">{price}</p>
+            <button className="bg-active p-2 hover:bg-active_dark">🚩</button>
+          </div>
         </div>
     </div>
   )
