@@ -5,9 +5,15 @@ export default function Loanding() {
     useEffect(()=>{
 
       let localCount = loandingDotsCount; 
-
       const interval = setInterval(()=>{
-        localCount > 2 ? setDotsCount(0) :setDotsCount(++localCount)
+        
+        if (localCount < 3){
+          setDotsCount(++localCount );
+        }
+        else{
+          localCount = 0
+          setDotsCount(localCount)
+        }
       }, 500)
 
       return () => {

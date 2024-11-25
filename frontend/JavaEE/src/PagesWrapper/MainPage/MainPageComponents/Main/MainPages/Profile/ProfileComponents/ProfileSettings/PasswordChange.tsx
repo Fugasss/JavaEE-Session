@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Loanding from '../../../../../../../../Modal/ModalContents/Registration/Loanding';
-import axios, { isAxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 import { EApi } from '../../../../../../../../api/EApi';
 import axiosApi from '../../../../../../../../utils/axiosApi';
 
@@ -34,7 +34,7 @@ export default function PasswordChange() {
             if(newPassword == newPasswordDublicate){
                 setIsLoanding(true)
                 try{
-                    const result = await axiosApi.put(EApi.CHANGE_PASSWORD , { oldPassword : actualPassword , newPassword })
+                    await axiosApi.put(EApi.CHANGE_PASSWORD , { oldPassword : actualPassword , newPassword })
                     setResponseText("Ваш пароль изменен!")
                 }
                 catch(err){
