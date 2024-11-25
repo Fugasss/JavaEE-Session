@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
-import { useModal } from '../../../Hooks/contextHooks';
+import { useLoginStatus, useModal } from '../../../Hooks/contextHooks';
 import EModalContent from '../../EModalContent';
 import Loanding from './Loanding';
 import { registrationRequest } from '../../../utils/verificationRequests';
+import TextField from '../FormComponents/TextField';
 
-export default function RegistrationForm() {
+export default function Registration() {
 
     const setModal = useModal();
+    const {isLogined , setIsLogined} = useLoginStatus();
 
-    const [loginData , setLoginData] = useState("");
+    const [emailData , setEmailData] = useState("");
     const [passwordData , setPasswordData] = useState("");
 
     const [statusContent , setStatusContent] = useState(<div></div>);
@@ -18,7 +20,7 @@ export default function RegistrationForm() {
 
       e.preventDefault();
 
-      if(loginData.length < 9){
+      if(emailData.length < 9){
         setStatusContent(<p>Почта не действительна</p>)
         return
       }
@@ -29,7 +31,7 @@ export default function RegistrationForm() {
 
       setIsLoanding(true);
 
-      const statusCode = await registrationRequest(loginData , passwordData);
+      const statusCode = await registrationRequest(emailData , passwordData);
 
       setIsLoanding(false);
 
@@ -37,7 +39,9 @@ export default function RegistrationForm() {
 
       switch (statusCode){
         case 201:{
+          setIsLogined(true);
           setModal(EModalContent.REGISTRATION_SUCCESS)
+
           break;
         }
         case 409:{
@@ -51,9 +55,6 @@ export default function RegistrationForm() {
         default :{
           setStatusContent(<p>Что-то пошло не так... </p>)
           console.log("Ошибка - неизветный код - " , statusCode)
-          setTimeout(()=>{
-            setStatusContent(<p>Ты Няшечка(*/ω＼*)</p>)
-          } , 5000)
           break;
         }
       }
@@ -63,17 +64,9 @@ export default function RegistrationForm() {
         <form action="" className="w-full">
             <div className="flex flex-col gap-4 w-full">
                 <h1 className="font-bold text-2xl mb-5 text-center">Регистрация</h1>
-                <p>Почта</p>  
-                <input type="text" className="w-full border-b-2 p-2" 
-                        placeholder="Введите почту..." 
-                        value={loginData}
-                        onChange={(e)=>{setLoginData(e.target.value)}}/>
-    
-                <p>Пароль</p>
-                <input type="password" className="w-full border-b-2 p-2" 
-                        placeholder="Введите пароль..." 
-                        value={passwordData}
-                        onChange={(e)=>{setPasswordData(e.target.value)}}/>
+
+                <TextField title="Почта" input_type='text' placeholder='Введите почту...' value={emailData} handler={setEmailData}/>
+                <TextField title="Пароль" input_type='password' placeholder='Введите пароль...' value={passwordData} handler={setPasswordData}/>
                         
                 <button className="bg-passive py-2 hover:bg-blue-300 mt-4 " disabled={isLoanding} onClick={(e)=>{sendRegistrationRequest(e)}}>
                   {isLoanding ? <Loanding/> : "Зарегистрироваться" }
@@ -82,6 +75,7 @@ export default function RegistrationForm() {
                 <div className='text-center'>{statusContent}</div>
 
                 <button className="underline text-gray-500" disabled={isLoanding} onClick={()=>{setModal(EModalContent.REGISTRATION)}}>Вход</button>
+                <button className="underline text-gray-500" disabled={isLoanding} onClick={()=>{setModal(EModalContent.RECOVER_PASSWORD)}}>Забыли пароль?</button>
             </div>
         </form>
       )

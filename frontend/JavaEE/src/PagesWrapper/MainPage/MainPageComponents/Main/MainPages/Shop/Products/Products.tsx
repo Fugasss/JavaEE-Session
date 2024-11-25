@@ -1,19 +1,44 @@
-import Product, { TProduct } from "./Product/Product"
+import { TFilterParams } from "../Shop";
+export type TProducts = {
+  productsData : JSX.Element , 
+  maxPages : number , 
+  filterParams : TFilterParams , 
+  setFilterParams : Function ,
+}
+export default function Products( {productsData , maxPages , filterParams ,setFilterParams} : TProducts) {
 
-export default function Products() {
+  const createPaginationArray = (maxNumber : number) => {
 
-    const data : [TProduct] = [{
-        title: "RTX9090",
-        img: "https://avatars.mds.yandex.net/i?id=ea51929c823e3664940d25afce97b1640999ef90-10586727-images-thumbs&n=13" , 
-        description:"Видеокарта", 
-        price: 1200 , 
-    }]
+    const resultArray = []
 
+    for (let i = 1; i < maxNumber+1; i++) {
+      resultArray.push(i)
+    }
+    console.log(maxNumber)
+    return resultArray
+  }
+
+  const changePage = (e : React.MouseEvent<HTMLButtonElement, MouseEvent> , newPage : number) =>{
+    e.preventDefault();
+    const newFilter = filterParams
+    newFilter.page = newPage
+    setFilterParams({...newFilter})
+  }
+
+  const paginationSequence = createPaginationArray(maxPages); 
+  console.log(paginationSequence)
   return (
     <section>
-        <div className="flex flex-wrap">
-            {data.map((item) => <Product title={item.title} img={item.img} price={item.price} description={item.description}/>)}
+      <div className="flex flex-col">
+        <div className="flex flex-wrap gap-4">
+          {productsData}         
         </div>
+        <nav>
+          <div className="flex m-2 gap-1">
+            { paginationSequence.map(item=> <button className="bg-passive  p-2 hover:bg-active disabled:bg-active_dark" disabled={filterParams.page+1==item} onClick={(e)=>{changePage(e,item-1)}}>{item}</button>) }
+          </div>
+        </nav>
+      </div>
     </section>
   )
 }

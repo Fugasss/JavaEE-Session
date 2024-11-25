@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { TFilterParams } from "../../Shop";
 
-export default function PartSelector(){
+export default function PartSelector({paramsChanges}:{paramsChanges:TFilterParams}){
   
   const partList = ["CPU" , "GPU" , "Memory" , "Disk" , "Motherboard" , "Power Block"]
   const [currentSelection , setSelection] = useState(partList[0]);

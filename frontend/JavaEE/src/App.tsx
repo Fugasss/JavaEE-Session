@@ -1,23 +1,25 @@
 import { createContext, useState } from "react"
 import EModalContent from "./Modal/EModalContent"
-import ModalWindowWrapper from "./Modal/ModalWindowWrapper"
-import MainPage from "./PagesWrapper/MainPage/MainPage"
+import { verifyToken } from "./utils/verificationRequests"
+import PagesWrapper from "./PagesWrapper/PagesWrapper"
 
-export const ModalContext = createContext<Function>(()=>{})
+export const LoginStatusContext = createContext<{ isLogined : boolean , setIsLogined : Function}>({isLogined : false , setIsLogined : ()=>{}})
+
+const isLoginedRequested = await verifyToken();
 
 function App() {
-  const[modalType , setModal] = useState(EModalContent.LOGIN)
+  
+  const[ isLogined , setIsLogined] = useState(isLoginedRequested)
+  console.log(isLogined)
 
+
+  
   return (
-    <>
-    <ModalContext.Provider value={setModal}>
+    <LoginStatusContext.Provider value={{isLogined , setIsLogined }}>
 
-      <MainPage/>
-
-      <ModalWindowWrapper type={modalType}/>
-
-    </ModalContext.Provider>
-    </>  
+      <PagesWrapper/>
+    
+    </LoginStatusContext.Provider>  
   )
 }
 
