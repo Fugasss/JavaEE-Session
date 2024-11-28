@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Path;
 import java.util.Date;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -44,14 +44,15 @@ public class ChangeUserService {
         userService.save(user);
     }
 
-    public void updateIconUrl(String newIconUrl) {
+
+    public void updateIcon(String newIconFilename) {
         User user = userService.getCurrentUser();
 
-        if (newIconUrl == null || newIconUrl.isEmpty()) {
+        if (newIconFilename == null || newIconFilename.isEmpty()) {
             throw new WrongData();
         }
 
-        user.setIconUrl(newIconUrl);
+        user.setIconUrl(Path.of(user.getId() ,newIconFilename).toString());
 
         userService.save(user);
     }
