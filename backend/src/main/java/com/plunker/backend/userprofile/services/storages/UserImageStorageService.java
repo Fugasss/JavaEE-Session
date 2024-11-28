@@ -1,5 +1,6 @@
 package com.plunker.backend.userprofile.services.storages;
 
+import com.plunker.backend.auth.services.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
 import java.util.stream.Stream;
 
 @Service
@@ -23,7 +21,7 @@ public class UserImageStorageService implements StorageService {
 
     @NotBlank
     private final StorageProperties properties;
-
+    private final UserService userService;
     private Path imagesPath;
 
     @Override
@@ -46,9 +44,15 @@ public class UserImageStorageService implements StorageService {
             if (file.isEmpty() || file.getOriginalFilename() == null || file.getOriginalFilename().isEmpty()) {
                 throw new StorageException("Failed to store empty file.");
             }
+            String idOfCurrentUser = userService.getCurrentUser().getId();
+
+            try {
+                Files.createDirectory(Path.of(imagesPath.toString(), idOfCurrentUser));
+            }catch (FileAlreadyExistsException ignored) {
+            }
 
             Path destination = imagesPath
-                    .resolve(Paths.get(file.getOriginalFilename()))
+                    .resolve(Path.of(idOfCurrentUser, file.getOriginalFilename()))
                     .normalize()
                     .toAbsolutePath();
 

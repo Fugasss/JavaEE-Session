@@ -56,8 +56,8 @@ public class UserProfileController {
 
     @PutMapping("change-icon-multipart")
     public void ChangeIconUrl(@RequestParam("file") MultipartFile newIconFile) {
-        userImageStorageService.store(newIconFile);
         changeUserService.updateIcon(newIconFile.getOriginalFilename());
+        userImageStorageService.store(newIconFile);
     }
 
     @GetMapping("/image")
