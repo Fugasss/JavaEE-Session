@@ -35,3 +35,4 @@ build/
 
 ### sensetive data ###
 db.properties
+/file-upload/

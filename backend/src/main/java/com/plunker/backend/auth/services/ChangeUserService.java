@@ -20,12 +20,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ChangeUserService {
 
-    private final int RECOVER_TOKEN_EXPIRES_IN_MINUTES = 10;
-
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final EmailSenderService emailSenderService;
-    private final RecoverPasswordTokenRepository recoverPasswordTokenRepository;
+    private final AccountRecoveryService accountRecoveryService;
 
     public void updatePassword(String oldPassword, String newPassword) throws UserOldAndNewPasswordsAreSame {
         User user = userService.getCurrentUser();
@@ -63,32 +61,21 @@ public class ChangeUserService {
             throw new UsernameNotFoundException(email);
         }
 
-        RecoverPasswordToken newToken = RecoverPasswordToken.builder()
-                .email(email)
-                .token(UUID.randomUUID().toString())
-                .expirationDate(new Date(System.currentTimeMillis() + RECOVER_TOKEN_EXPIRES_IN_MINUTES * 60 * 1000))
-                .build();
-
-        newToken = recoverPasswordTokenRepository.save(newToken);
+        String newToken = accountRecoveryService.GenerateRecoveryTokenForEmail(email);
 
         String subject = "Recover Password";
-        String address = "http://localhost:5173/recover?token=%s".formatted(newToken.getToken());
+        String address = "http://localhost:5173/recover?token=%s".formatted(newToken);
         String message = "Open this link to recover your password: %s".formatted(address);
 
         emailSenderService.sendSimpleEmail(email, subject, message);
     }
 
     public void updatePasswordWithToken(String token, String newPassword) {
-        RecoverPasswordToken recoverToken = recoverPasswordTokenRepository.findByToken(token);
 
-        if (recoverToken == null) {
-            throw new WrongData();
-        }
+        AccountRecoveryService.ReleasedTokenData tokenData = accountRecoveryService.ReleaseToken(token);
 
-        User user = userService.getByEmail(recoverToken.getEmail());
+        User user = userService.getByEmail(tokenData.getEmail());
         user.setPassword(passwordEncoder.encode(newPassword));
         userService.save(user);
-
-        recoverPasswordTokenRepository.deleteByToken(token);
     }
 }

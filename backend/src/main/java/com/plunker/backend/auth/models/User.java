@@ -45,6 +45,9 @@ public class User implements UserDetails{
     @URL
     private String iconUrl = "https://www.strasys.uk/wp-content/uploads/2022/02/Depositphotos_484354208_S.jpg";
 
+    @Column(nullable = false)
+    private boolean isActivated = false;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
@@ -72,7 +75,7 @@ public class User implements UserDetails{
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isActivated;
     }
 
     @PrePersist

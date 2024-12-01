@@ -1,6 +1,7 @@
 package com.plunker.backend.auth.controllers;
 
 import com.plunker.backend.auth.dto.*;
+import com.plunker.backend.auth.services.AccountActivationService;
 import com.plunker.backend.auth.services.AuthenticationService;
 import com.plunker.backend.auth.services.ChangeUserService;
 import com.plunker.backend.auth.util.JwtTokenExpired;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Аутентификация")
 public class AuthController {
     private final AuthenticationService authenticationService;
+    private final AccountActivationService accountActivationService;
     private final ChangeUserService changeUserService;
 
     @Operation(summary = "Регистрация пользователя")
@@ -45,6 +47,12 @@ public class AuthController {
     @ResponseStatus(HttpStatus.OK)
     public JwtAuthenticationResponse Login(@RequestBody @Valid LoginRequest request) {
         return authenticationService.login(request);
+    }
+
+    @Operation(summary = "Отправить письмо для восстановление пароля")
+    @PostMapping("/activate")
+    public void ActivateAccountByToken(@RequestBody @Valid AccountActivationRequest request) {
+        accountActivationService.activateAccountByToken(request.getToken());
     }
 
     @Operation(summary = "Отправить письмо для восстановление пароля")

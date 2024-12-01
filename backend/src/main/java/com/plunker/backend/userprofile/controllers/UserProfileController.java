@@ -82,7 +82,7 @@ public class UserProfileController {
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(mimeType.get());
         headers.setContentLength(data.length);
-        headers.setContentDisposition(ContentDisposition.builder("inline").filename(imagePath.getFilename()).build());
+        headers.setContentDisposition(ContentDisposition.inline().filename(imagePath.getFilename()).build());
         byte[] finalData = data;
         final StreamingResponseBody body = out -> {
             out.write(finalData);

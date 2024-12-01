@@ -19,6 +19,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final AccountActivationService accountActivationService;
 
     /**
      * Регистрация пользователя
@@ -35,6 +36,8 @@ public class AuthenticationService {
                 .build();
 
         userService.create(user);
+
+        accountActivationService.sendActivationRequestEmail(user.getEmail());
 
         var jwt = jwtService.generateToken(user);
         return new JwtAuthenticationResponse(jwt);
