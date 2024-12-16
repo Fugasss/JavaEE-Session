@@ -7,7 +7,7 @@ import Registration from "./ModalContents/Registration/Registration"
 import RegistrationSuccess from "./ModalContents/Registration/RegistrationSuccess"
 import ModalWindow from "./ModalWindow"
 
-export default function ModalWindowWrapper({type}:{type:EModalContent}) {
+export default function ModalWindowWrapper({type , data}:{type:EModalContent , data?:string}) {
 
   const renderModalWindow = () =>{
     switch(type){
@@ -53,6 +53,13 @@ export default function ModalWindowWrapper({type}:{type:EModalContent}) {
         return(
           <ModalWindow unclosed>
             <RecoverConfirm/>
+          </ModalWindow>
+        )
+      }
+      case EModalContent.OPEN_IMAGE:{
+        return(
+          <ModalWindow >
+            <img className="w-full h-full" src={data} alt="" />
           </ModalWindow>
         )
       }

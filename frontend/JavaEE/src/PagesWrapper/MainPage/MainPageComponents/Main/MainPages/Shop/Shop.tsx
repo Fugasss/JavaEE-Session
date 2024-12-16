@@ -63,7 +63,6 @@ export default function Shop() {
 
   useEffect(()=>{
     fetchProducts();  
-    console.log("USE_EFFECT!")
   },[filterParams])
 
   

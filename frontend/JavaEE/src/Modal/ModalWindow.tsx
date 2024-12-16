@@ -5,7 +5,7 @@ export default function ModalWindow({children , unclosed}:{children:React.ReactN
   const setModal = useModal()
 
   const closeModal = ()=>{
-    setModal(EModalContent.NONE)
+    setModal({type : EModalContent.NONE , data:""})
   }
     return (
         <div className="fixed top-0 left-0 w-screen h-screen bg-modal_shadow flex flex-col items-center justify-center"

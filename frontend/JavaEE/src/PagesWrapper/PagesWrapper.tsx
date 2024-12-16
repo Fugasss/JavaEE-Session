@@ -7,7 +7,7 @@ export const ModalContext = createContext<Function>(()=>{})
 
 export default function PagesWrapper() {
 
-  const[ modalType , setModal ] = useState(EModalContent.NONE)
+  const[ modalType , setModal ] = useState<{type : EModalContent , data?:string }>({ type : EModalContent.NONE })
 
   return (
     <div className="flex min-h-screen">
@@ -15,7 +15,7 @@ export default function PagesWrapper() {
 
         <MainPage/>
         
-        <ModalWindowWrapper type={modalType}/>
+        <ModalWindowWrapper type={modalType.type } data={modalType.data}/>
 
       </ModalContext.Provider>
     </div>

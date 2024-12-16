@@ -31,7 +31,7 @@ export default function Login() {
         case 200:{
           
           setIsLogined(true);
-          setModal(EModalContent.LOGIN_SUCCESS)
+          setModal({type : EModalContent.LOGIN_SUCCESS , data:""})
           break;
         }
         case 400 :
@@ -64,8 +64,8 @@ export default function Login() {
               {isLoanding ? <Loanding/> : "Вход" }
             </button>
             {statusContent}
-            <button className="underline text-gray-500" disabled={isLoanding} onClick={()=>{setModal(EModalContent.REGISTRATION)}}>Регистрация</button>
-            <button className="underline text-gray-500" disabled={isLoanding} onClick={()=>{setModal(EModalContent.RECOVER_PASSWORD)}}>Забыли пароль?</button>
+            <button className="underline text-gray-500" disabled={isLoanding} onClick={()=>{setModal({ type:EModalContent.REGISTRATION , data:""})}}>Регистрация</button>
+            <button className="underline text-gray-500" disabled={isLoanding} onClick={()=>{setModal({ type :EModalContent.RECOVER_PASSWORD , data:""})}}>Забыли пароль?</button>
         </div>
     </form>
   )

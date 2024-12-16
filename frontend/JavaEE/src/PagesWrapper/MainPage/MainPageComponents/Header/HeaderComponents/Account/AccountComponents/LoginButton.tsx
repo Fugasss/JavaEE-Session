@@ -7,7 +7,7 @@ export default function LoginButton() {
 
   return (
     <button className="px-5 bg-passive p-2" onClick={()=>{
-      setModal(EModalContent.LOGIN);
+      setModal({type : EModalContent.LOGIN , data: ""} );
     }}>Войти</button>
   )
 }
