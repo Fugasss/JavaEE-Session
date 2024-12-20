@@ -58,7 +58,7 @@ export default function ModalWindowWrapper({type , data}:{type:EModalContent , d
       }
       case EModalContent.OPEN_IMAGE:{
         return(
-          <ModalWindow >
+          <ModalWindow>
             <img className="w-full h-full" src={data} alt="" />
           </ModalWindow>
         )

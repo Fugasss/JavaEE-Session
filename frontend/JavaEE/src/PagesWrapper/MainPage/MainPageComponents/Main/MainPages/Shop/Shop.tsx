@@ -27,7 +27,7 @@ type ApiProduct = {
   productName: string , 
   productType: string , 
   productInfo: string , 
-  price: number ,
+  price: string ,
   discount: number ,
   stock: number ,
 }
@@ -48,10 +48,10 @@ export default function Shop() {
 
       console.log(response)
       if(products.length >0){
-        setProductsData(<>{products.map( item => <Product title={item.productName} description={item.productInfo.slice(0,30) + "..."} img="https://avatars.mds.yandex.net/i?id=33b583fddf2d60115cbd8d3d4225e8083370d176-10477521-images-thumbs&n=13" price={item.price}/>)}</>);
+        setProductsData(<>{products.map( item => <Product id={item.productId} title={item.productName} description={item.productInfo + "..."} img="https://avatars.mds.yandex.net/i?id=33b583fddf2d60115cbd8d3d4225e8083370d176-10477521-images-thumbs&n=13" price={item.price}/>)}</>);
       }
       else{
-        setProductsData(<p>Нет товаров по вашему запросу :(</p>)
+        setProductsData(<p>Нет товаров по вашему запросу...</p>)
       }
     }
     catch(err){
