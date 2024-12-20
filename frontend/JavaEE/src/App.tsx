@@ -11,8 +11,6 @@ function App() {
   
   const[ isLogined , setIsLogined] = useState(isLoginedRequested)
   console.log(isLogined)
-
-
   
   return (
     <LoginStatusContext.Provider value={{isLogined , setIsLogined }}>

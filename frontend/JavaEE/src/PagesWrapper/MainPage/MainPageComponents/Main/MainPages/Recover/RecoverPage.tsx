@@ -6,7 +6,7 @@ export default function RecoverPage() {
     const setModal = useModal()
 
     useEffect(()=>{
-        setModal(EModalContent.RECOVER_CONFIRM)
+        setModal({type : EModalContent.RECOVER_CONFIRM , data:"" })
     } ,[])
 
   return (

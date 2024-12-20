@@ -40,7 +40,7 @@ export default function Registration() {
       switch (statusCode){
         case 201:{
           setIsLogined(true);
-          setModal(EModalContent.REGISTRATION_SUCCESS)
+          setModal({type : EModalContent.REGISTRATION_SUCCESS , data:""})
 
           break;
         }

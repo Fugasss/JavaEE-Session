@@ -6,4 +6,5 @@ export enum ERoutes{
     RECOVER = "/recover" ,
     ADMIN = "/admin" , 
     BUILDER = "/builder" , 
+    PRODUCT = "/product" , 
 }

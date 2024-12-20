@@ -9,6 +9,7 @@ export enum EApi{
     RECOVER_CONFIRM = DEFAULT + "auth/recover-confirmation",
 
     PRODUCTS = DEFAULT + "products" , 
+    PRODUCT = DEFAULT + "product",
 
     PROFILE = DEFAULT + "profile" , 
     CHANGE_PASSWORD = PROFILE + "/change-password" ,  

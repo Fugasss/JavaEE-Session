@@ -26,7 +26,6 @@ export default function Products( {productsData , maxPages , filterParams ,setFi
   }
 
   const paginationSequence = createPaginationArray(maxPages); 
-  console.log(paginationSequence)
   return (
     <section>
       <div className="flex flex-col">

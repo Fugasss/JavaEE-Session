@@ -29,7 +29,7 @@ export default function RecoverConfirm() {
                 const response = await axios.post(EApi.RECOVER_CONFIRM , {token , password : newPassword})
                 setRequestStatus("Запись восстановлена !")
                 navigator(ERoutes.PROFILE)
-                setModal(EModalContent.NONE)
+                setModal({type : EModalContent.NONE , data: ""})
             }
             else{
                 setRequestStatus("Пароли не совпадают")
