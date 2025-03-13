@@ -27,7 +27,7 @@ else{
 export default function ProfileSettings() {
 
 
-  const {isLogined , setIsLogined} = useLoginStatus();
+  const { setIsLogined} = useLoginStatus();
 
   const logOut = (e : React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();

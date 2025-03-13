@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import EModalContent from "../../EModalContent";
 import Loanding from "../Registration/Loanding";
 import { loginRequest } from "../../../utils/verificationRequests";
@@ -13,7 +13,7 @@ export default function Login() {
     const [emailData , setEmailData] = useState("");
     const [passwordData , setPasswordData] = useState("");
     
-    const {isLogined , setIsLogined} = useLoginStatus();
+    const {setIsLogined} = useLoginStatus();
     const setModal = useModal()
 
     const sendLoginRequest = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) =>{

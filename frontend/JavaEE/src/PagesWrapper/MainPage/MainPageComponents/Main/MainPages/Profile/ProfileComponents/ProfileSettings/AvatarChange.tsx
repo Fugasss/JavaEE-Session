@@ -1,4 +1,4 @@
-import axios, { isAxiosError } from 'axios';
+import  { isAxiosError } from 'axios';
 import React, { useState } from 'react'
 import { EApi } from '../../../../../../../../api/EApi';
 import Loanding from '../../../../../../../../Modal/ModalContents/Registration/Loanding';
@@ -16,7 +16,7 @@ export default function AvatarChange() {
         if(imageLink.length > 6){
           setIsLoanding(true)
           try{
-            const result = await axiosApi.put( EApi.CHANGE_AVATAR , { newIconUrl : imageLink} )
+            await axiosApi.put( EApi.CHANGE_AVATAR , { newIconUrl : imageLink} )
             setResponseText("Успех!")
           }
           catch(err){

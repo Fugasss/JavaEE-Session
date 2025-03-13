@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import BucketItem, { TBucketItem } from './BucketItem'
 import Loanding from '../../../../../../../../Modal/ModalContents/Registration/Loanding'
-import axios, { isAxiosError } from 'axios'
+import { isAxiosError } from 'axios'
 import { EApi } from '../../../../../../../../api/EApi'
 import axiosApi from '../../../../../../../../utils/axiosApi'
 

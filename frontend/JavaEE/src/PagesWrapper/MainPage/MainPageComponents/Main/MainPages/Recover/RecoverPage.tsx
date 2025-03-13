@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useModal } from '../../../../../../Hooks/contextHooks'
 import EModalContent from '../../../../../../Modal/EModalContent'
 

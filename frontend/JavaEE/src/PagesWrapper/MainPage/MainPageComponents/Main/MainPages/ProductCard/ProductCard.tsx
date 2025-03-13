@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
-import { EApi } from '../../../../../../api/EApi';
-import axios from 'axios';
+
+import { useLocation } from 'react-router-dom'
 import { TProduct } from '../Shop/Products/Product/Product';
 import ImageSelection from './ProductCardComponents/ImageSelection';
 import CardInformation from './ProductCardComponents/CardInformation';
@@ -24,7 +22,7 @@ export default function ProductCard() {
   //   const res = productCardRequest("111");
   // },[])
 
-  const {id , description , img ,price ,title} : TProduct = {
+  const { description , img ,price ,title} : TProduct = {
     id : params.get("id")! , 
     description : params.get("description")! , 
     img : params.get("img")!,

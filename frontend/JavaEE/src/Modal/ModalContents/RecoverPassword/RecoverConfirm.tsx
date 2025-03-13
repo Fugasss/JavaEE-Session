@@ -3,7 +3,7 @@ import TextField from "../FormComponents/TextField";
 import axios, { isAxiosError } from "axios";
 import Loanding from "../Registration/Loanding";
 import { EApi } from "../../../api/EApi";
-import { parsePath, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ERoutes } from "../../../api/ERoutes";
 import { useModal } from "../../../Hooks/contextHooks";
 import EModalContent from "../../EModalContent";
@@ -17,7 +17,7 @@ export default function RecoverConfirm() {
     const [requestStatus , setRequestStatus] = useState("")
     const [isLoanding , setIsLoanding] = useState(false)
 
-    const [searchParams , setParams] = useSearchParams()
+    const [searchParams] = useSearchParams()
     const setModal = useModal()
 
     const sendRecoverRequest = async (e :React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -26,7 +26,7 @@ export default function RecoverConfirm() {
         try{
             if(newPassword === newPasswordCheck){
                 const token = searchParams.get("token")
-                const response = await axios.post(EApi.RECOVER_CONFIRM , {token , password : newPassword})
+                await axios.post(EApi.RECOVER_CONFIRM , {token , password : newPassword})
                 setRequestStatus("Запись восстановлена !")
                 navigator(ERoutes.PROFILE)
                 setModal({type : EModalContent.NONE , data: ""})

@@ -1,4 +1,4 @@
-import React from 'react'
+
 
 export default function CardInformation({title , description , price} : {title:string , description : string , price:string}) {
   return (

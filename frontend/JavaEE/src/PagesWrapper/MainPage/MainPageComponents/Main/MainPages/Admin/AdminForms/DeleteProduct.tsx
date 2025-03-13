@@ -10,7 +10,7 @@ export default function DeleteProduct() {
     const deleteProductRequest = async ( e : React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         try{
-            const resp = await axiosApi.delete(EApi.ADMIN , {data : {"productId" : id}})
+            await axiosApi.delete(EApi.ADMIN , {data : {"productId" : id}})
             console.log("CREATED")
             
         }

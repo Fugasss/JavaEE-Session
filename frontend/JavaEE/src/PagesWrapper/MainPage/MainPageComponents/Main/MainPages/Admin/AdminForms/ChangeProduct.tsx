@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import TextField from '../../../../../../../Modal/ModalContents/FormComponents/TextField'
-import axios from 'axios'
+
 import axiosApi from '../../../../../../../utils/axiosApi'
 import { EApi } from '../../../../../../../api/EApi'
 
@@ -17,7 +17,7 @@ export default function ChangeProduct() {
     const changeProductRequest = async ( e : React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         try{
-            const resp = await axiosApi.put(EApi.ADMIN , {
+            await axiosApi.put(EApi.ADMIN , {
                 "productId": id,
                 "productName": name,
                 "productDescription": desc,

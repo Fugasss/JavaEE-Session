@@ -4,7 +4,7 @@ import ProfileButton from "./AccountComponents/ProfileButton";
 
 export default function Account() {
 
-  const {isLogined , setIsLogined } = useLoginStatus()
+  const {isLogined } = useLoginStatus()
 
   return (
     <div className="flex items-center gap-4 p-3">

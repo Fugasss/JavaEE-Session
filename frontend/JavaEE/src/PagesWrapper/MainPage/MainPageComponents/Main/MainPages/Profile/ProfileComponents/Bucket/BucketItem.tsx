@@ -7,7 +7,7 @@ export type TBucketItem = {
   status :string 
 }
 
-export default function BucketItem({title , image , desc , price , status}:TBucketItem) {
+export default function BucketItem({title , image , desc , price}:TBucketItem) {
 
   return (
     <li className='w-full p-4 bg-WHITE'>

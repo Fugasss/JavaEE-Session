@@ -8,7 +8,7 @@ import TextField from '../FormComponents/TextField';
 export default function Registration() {
 
     const setModal = useModal();
-    const {isLogined , setIsLogined} = useLoginStatus();
+    const { setIsLogined} = useLoginStatus();
 
     const [emailData , setEmailData] = useState("");
     const [passwordData , setPasswordData] = useState("");

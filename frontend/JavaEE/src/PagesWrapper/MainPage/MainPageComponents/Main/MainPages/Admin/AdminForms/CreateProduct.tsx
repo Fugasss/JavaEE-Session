@@ -14,7 +14,7 @@ export default function CreateProduct() {
     const createProductRequest = async ( e : React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       e.preventDefault();
       try{
-          const resp = await axiosApi.post(EApi.ADMIN , {
+          await axiosApi.post(EApi.ADMIN , {
               "productName": name,
               "productDescription": desc,
               "productType": productType,

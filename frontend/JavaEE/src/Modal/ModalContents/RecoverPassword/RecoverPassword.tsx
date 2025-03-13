@@ -2,7 +2,7 @@ import { useState } from "react";
 import TextField from "../FormComponents/TextField";
 import Loanding from "../Registration/Loanding";
 import axios, { isAxiosError } from "axios";
-import axiosApi from "../../../utils/axiosApi";
+
 import { EApi } from "../../../api/EApi";
 
 export default function RecoverPassword() {
@@ -16,7 +16,7 @@ export default function RecoverPassword() {
     e.preventDefault();
     setIsLoanding(true)
     try{
-      const result = await axios.post(EApi.RECOVER,{ email : emailForRecover})
+      await axios.post(EApi.RECOVER,{ email : emailForRecover})
       console.log("Recover sended !!!")
       setRequestStatus("Запрос отправлен на почту")
     }

@@ -1,5 +1,4 @@
 import { createContext, useState } from "react"
-import EModalContent from "./Modal/EModalContent"
 import { verifyToken } from "./utils/verificationRequests"
 import PagesWrapper from "./PagesWrapper/PagesWrapper"
 

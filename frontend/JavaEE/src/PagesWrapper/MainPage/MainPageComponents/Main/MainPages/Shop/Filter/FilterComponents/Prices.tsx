@@ -24,14 +24,12 @@ export default function Prices({paramsChanges}:{paramsChanges:TFilterParams}) {
                 <p>От:</p>
                 <input type="number" value={minValue} className="px-2 w-full" onChange={(e) => {
                   e.preventDefault();
-                  const value = Number(e.target.value);
                 }}/>
             </div>
             <div className='flex gap-2 w-full'>
                 <p>До:</p>
                 <input type="number" value={maxValue} className="px-2 w-full" onChange={(e) => {
                   e.preventDefault();
-                  const value = Number(e.target.value);
                 }}/>
             </div>
         </div>
